@@ -6,17 +6,12 @@ const config = {
     physics: {
         default: "matter",
         matter: {
-            setBounds: {
-                x: 0,
-                y: -250,
-                width: 640,
-                height: 480 + 500,
-                thickness: 64,
-            },
             gravity: {
                 x: 0,
-                y: 0,
-            }
+                y: -1,
+            },
+            debug: true,
+            restingThresh: 0.004
         },
     },
     

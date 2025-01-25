@@ -18,6 +18,19 @@ class Game extends Phaser.Scene {
         this.width = this.sys.game.config.width;
         this.height = this.sys.game.config.height;
         this.bubbles = this.add.group();
+
+        const wallThickness = 20;
+        const wallHeight = this.height + 500;
+
+        this.matter.add.rectangle(-wallThickness / 2, wallHeight / 2, wallThickness, wallHeight, {
+            restitution: 1,
+            isStatic: true
+        });
+
+        this.matter.add.rectangle(this.width + wallThickness / 2, wallHeight / 2, wallThickness, wallHeight, {
+            restitution: 1,
+            isStatic: true
+        });
     }
 
     update(time, delta) {
@@ -27,8 +40,8 @@ class Game extends Phaser.Scene {
                 this,
                 Math.random() * this.width,
                 this.height + 128,
-                Math.random() * 20 - 10,
-                Math.random() * 5 - 10
+                Math.random() * 10 - 5,
+                Math.random() * 2.5 - 5
             );
             this.bubbles.add(bubble);
             this.timer++;
