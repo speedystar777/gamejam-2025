@@ -9,74 +9,16 @@
   <script src="//cdn.jsdelivr.net/npm/phaser@3.87.0/dist/phaser.js"></script>
 </head>
 
-<body>
-  <h4>TFJS & PoseNet test
-    <hr />
-  </h4>
+<body style="margin: 0;">
   <div id="debugPos" style="position: absolute; top: 0px; left: 0px;z-index: 3;background-color:#00ff00;
         width:8;height:8;"></div>
+  <input type="checkbox" id="mouse-controls"/><label>Mouse Controls</label>
   <script src="./webcamSetup.js"> </script>
-  <script src="./poseDetection.js"> </script>
+  <script src="./poseDetection.js"></script>
   <script src="./gameobjects/bubble.js"></script>
   <script src="./gameobjects/pufferfish.js"></script>
   <script src="./scenes/game.js"></script>
   <script src="./index.js"></script>
-  <script>/*
-
-    class Example extends Phaser.Scene {
-      preload() {
-        this.load.image('sky', 'assets/orig_big.png');
-        this.load.image('bubble', 'assets/bubble.svg');
-      }
-
-      create() {
-        this.add.image(400, 300, 'sky');
-        this.sprite = this.physics.add.image(400, 600, 'bubble').setScale(0.5);
-
-        this.bubble = this.physics.add.image(200, 600, 'bubble').setScale(0.5);
-
-        this.bubble.setInteractive();
-
-        this.input.setDraggable(this.bubble);
-
-        this.input.on('drag', (pointer, gameObject, dragX, dragY) => {
-
-          gameObject.x = dragX;
-          gameObject.y = dragY;
-
-        });
-
-      }
-
-      update() {
-
-        this.physics.overlap(this.sprite, this.bubble, (sprite, bubble) => {
-
-          sprite.destroy();
-
-        });
-      }
-    }
-
-    const config = {
-      type: Phaser.AUTO,
-      width: 800,
-      height: 600,
-      parent: 'phaser-example',
-      physics: {
-        default: 'arcade',
-        arcade: {
-          debug: true,
-          gravity: { y: -100 }
-        }
-      },
-      scene: Example
-    };
-
-    const game = new Phaser.Game(config);
-
-  */</script>
-
 </body>
 
 </html>
