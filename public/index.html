@@ -6,17 +6,21 @@
   <!-- Load Posenet -->
   <script src="https://unpkg.com/@tensorflow-models/posenet"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser-arcade-physics.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/phaser@3.87.0/dist/phaser.js"></script>
 </head>
 
 <body style="margin: 0;">
-  <video autoplay playsinline muted id="webcam" width="256" height="256" style="transform: scaleX(-1); 
-  position: absolute; top: 0px; right: 0px; z-index: -1;"></video>
   <div id="debugPos" style="position: absolute; top: 0px; left: 0px;z-index: 3;background-color:#00ff00;
         width:8;height:8;"></div>
+  <div style="position: absolute; top: 0px; left: 0px;">
+    <input type="checkbox" id="mouse-controls"/><label>Mouse Controls</label>
+  </div>
   <script src="./webcamSetup.js"> </script>
-  <script src="./scene.js"></script>
   <script src="./poseDetection.js"></script>
+  <script src="./gameobjects/bubble.js"></script>
+  <script src="./gameobjects/pufferfish.js"></script>
+  <script src="./scenes/game.js"></script>
+  <script src="./index.js"></script>
 </body>
 
 </html>
