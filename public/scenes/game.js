@@ -4,6 +4,14 @@ class Game extends Phaser.Scene {
         super({ key: "game" });
     }
 
+    timeEventCallback() {
+        this.seconds--;
+        this.timerText.setText('Time Left: ' + this.seconds);
+        if (this.seconds === 0) {
+            this.timedEvent.paused = true;
+        }
+    }
+
     init() {
         this.timer = 0;
         this.popCount = 0;
@@ -24,13 +32,19 @@ class Game extends Phaser.Scene {
 
         this.pufferfish = new Pufferfish(this, 0, 0);
 
+        this.seconds = 10
+        this.timerText = this.add.text(window.innerWidth - 150, 10, 'Time Left: ' + this.seconds)
+            .setScale(1.5)
+            .setStyle({ fontStyle: "bold", fontFamily: "Arial" });
+        this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.timeEventCallback, callbackScope: this, repeat: -1 });
+
         this.label = this.add
             .text(10, 10, "Update-function-call-counter")
             .setScale(1.5)
             .setOrigin(0)
             .setStyle({ fontStyle: "bold", fontFamily: "Arial" });
 
-        
+
 
         this.width = this.sys.game.config.width;
         this.height = this.sys.game.config.height;
@@ -59,7 +73,7 @@ class Game extends Phaser.Scene {
                 scene.popCount++;
             }
         });
-          
+
     }
 
     update(time, delta) {
@@ -67,7 +81,7 @@ class Game extends Phaser.Scene {
         this.label.setText(`Pop Count: ${this.popCount}`);
 
         this.timer -= delta / 1000;
-        if (this.timer < 0) {
+        if (this.timer < 0 && this.seconds > 0) {
             const bubble = new Bubble(
                 this,
                 Math.random() * this.width,
