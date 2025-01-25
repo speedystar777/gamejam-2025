@@ -19,20 +19,39 @@
   <script src="./webcamSetup.js"> </script>
   <script src="./poseDetection.js"> </script>
   <script>
+
     class Example extends Phaser.Scene {
       preload() {
-
         this.load.image('sky', 'orig_big.png');
         this.load.image('bubble', './bubble.svg');
       }
 
       create() {
         this.add.image(400, 300, 'sky');
+        this.sprite = this.physics.add.image(400, 600, 'bubble').setScale(0.5);
 
-        const bubble = this.physics.add.image(500, 700, 'bubble');
+        this.bubble = this.physics.add.image(200, 600, 'bubble').setScale(0.5);
 
-        bubble.setVelocity(-100, -100);
+        this.bubble.setInteractive();
 
+        this.input.setDraggable(this.bubble);
+
+        this.input.on('drag', (pointer, gameObject, dragX, dragY) => {
+
+          gameObject.x = dragX;
+          gameObject.y = dragY;
+
+        });
+
+      }
+
+      update() {
+
+        this.physics.overlap(this.sprite, this.bubble, (sprite, bubble) => {
+
+          sprite.destroy();
+
+        });
       }
     }
 
@@ -40,16 +59,19 @@
       type: Phaser.AUTO,
       width: 800,
       height: 600,
-      scene: Example,
+      parent: 'phaser-example',
       physics: {
         default: 'arcade',
         arcade: {
+          debug: true,
           gravity: { y: -100 }
         }
-      }
+      },
+      scene: Example
     };
 
     const game = new Phaser.Game(config);
+
   </script>
 
 </body>
