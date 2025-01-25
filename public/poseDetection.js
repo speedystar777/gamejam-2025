@@ -6,8 +6,8 @@ const flipHorizontal = false;
 const outputStride = 8;
 const imageElement = document.getElementById('webcam');
 const debugPos = document.getElementById('debugPos');
-const LEFT_INDEX = 9
-const RIGHT_INDEX = 10
+const LEFT_INDEX = 9;
+const RIGHT_INDEX = 10;
 
 let debugPoints = null;
 
