@@ -17,15 +17,16 @@ if (imageElement) { // imageelement is falsey when there is no webcam
     debugPoints = [];
     for (var i = 0; i < 17; i++) {
         debugPoints[i] = debugPos.cloneNode(false);
-        if (i == LEFT_INDEX) {
-            debugPoints[i].style.backgroundColor = "#f00";
-        }
-        else if (i == RIGHT_INDEX) {
-            debugPoints[i].style.backgroundColor = "#00f";
-        }
-        else {
-            debugPoints[i].style.zIndex = -1;
-        }
+        // if (i == LEFT_INDEX) {
+        //     debugPoints[i].style.backgroundColor = "#f00";
+        // }
+        // else if (i == RIGHT_INDEX) {
+        //     debugPoints[i].style.backgroundColor = "#00f";
+        // }
+        // else {
+        //     debugPoints[i].style.zIndex = -1;
+        // }
+        debugPoints[i].style.zIndex = -1;
         debugPos.parentNode.appendChild(debugPoints[i]);
     }
     debugPos.remove();
