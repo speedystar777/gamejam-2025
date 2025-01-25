@@ -7,7 +7,9 @@ const outputStride = 8;
 const imageElement = document.getElementById('webcam');
 const debugPos = document.getElementById('debugPos');
 
-var debugPoints = []
+const smoothing = 0.9;
+var poseHistory = [];
+var debugPoints = [];
 for(var i = 0; i < 17; i++) {
     debugPoints[i] = debugPos.cloneNode(false);
     if(i == 9) {
@@ -16,10 +18,10 @@ for(var i = 0; i < 17; i++) {
     else if(i == 10) {
         debugPoints[i].style.backgroundColor = "#00f";
     }
-    if(i == 9 || i == 10) {
-        debugPos.parentNode.appendChild(debugPoints[i]);
+    else {
+        debugPoints[i].style.zIndex = -1;
     }
-    // debugPos.parentNode.appendChild(debugPoints[i]);
+    debugPos.parentNode.appendChild(debugPoints[i]);
 }
 debugPos.remove();
 
@@ -30,21 +32,29 @@ posenet.load().then(function(net) {
 
     function myCallback() {
         net.estimateSinglePose(imageElement, imageScaleFactor, flipHorizontal, outputStride).then(function(pose) {        
-            // for(var i = 0; i < 17; i++) {
-            //     var pos = pose.keypoints[i].position;
-            //     const newX = (pos.x/256)*window.innerWidth;
-            //     const newY = (pos.y/256)*window.innerHeight;
-            //     debugPoints[i].style.top = newY; //40 + (pos.y);
-            //     debugPoints[i].style.left = window.innerWidth - newX; //4 + (256-pos.x);
-            // }
-            for(var i = 9; i < 11; i++) {
+            for(var i = 0; i < 17; i++) {
                 var pos = pose.keypoints[i].position;
-                const newX = (pos.x/256)*window.innerWidth;
+                const newX = window.innerWidth - ((pos.x / 256) * window.innerWidth);
                 const newY = (pos.y/256)*window.innerHeight;
-                debugPoints[i].style.top = newY; 
-                debugPoints[i].style.left = window.innerWidth - newX;
+                pos.x = newX;
+                pos.y = newY;
+
+                if(poseHistory.length < 17) {
+                    poseHistory.push(pos);
+                }
+                else{
+                    poseHistory[i].x = lerp(newX, poseHistory[i].x, smoothing);
+                    poseHistory[i].y = lerp(newY, poseHistory[i].y, smoothing);
+                }
+
+                debugPoints[i].style.left = poseHistory[i].x;
+                debugPoints[i].style.top = poseHistory[i].y; 
             }
         });
     }
 });
+
+function lerp(a, b, t) {
+    return a + (b - a) * t;
+}
 
