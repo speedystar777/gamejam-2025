@@ -5,8 +5,10 @@ class Game extends Phaser.Scene {
     }
 
     init() {
+        this.targetColor = selectRandom(colors);
         this.timer = 0;
-        this.popCount = 0;
+        this.correctPopCount = 0;
+        this.incorrectPopCount = 0;
         this.bubblesSpawned = 0;
         this.leftWall = null;
         this.rightWall = null;
@@ -15,7 +17,9 @@ class Game extends Phaser.Scene {
 
     preload() {
         this.load.image('sky', 'assets/orig_big.png');
-        this.load.image('bubble', 'assets/bubble.svg');
+        colors.forEach((color) => {
+            this.load.image(`${color} bubble`, `assets/${color} bubble.svg`);
+        });
     }
 
     create() {
@@ -52,32 +56,54 @@ class Game extends Phaser.Scene {
         const scene = this;
         this.matter.world.on("collisionstart", function (event, bodyA, bodyB) {
             if (bodyA.label.startsWith("bubble ") && bodyB.label === "pufferfish") {
-                bodyA.gameObject.destroy();
-                scene.popCount++;
+                scene.pop(bodyA);
             } else if (bodyA.label === "pufferfish" && bodyB.label.startsWith("bubble ")) {
-                bodyB.gameObject.destroy();
-                scene.popCount++;
+                scene.pop(bodyB);
             }
         });
           
     }
 
+    pop(bubble){
+        console.log(bubble);
+        if (bubble.label.endsWith(` (${this.targetColor})`)) {
+            this.correctPopCount++;
+        } else {
+            this.incorrectPopCount++;
+        }
+        bubble.gameObject.destroy();
+    }
+
     update(time, delta) {
 
-        this.label.setText(`Pop Count: ${this.popCount}`);
+        this.label.setText(`Target color: ${this.targetColor}; Correct bubbles popped: ${this.correctPopCount}; Incorrect bubbles popped: ${this.incorrectPopCount}`);
 
         this.timer -= delta / 1000;
         if (this.timer < 0) {
-            const bubble = new Bubble(
-                this,
-                Math.random() * this.width,
-                this.height + 128,
-                Math.random() * 5 - 2.5,
-                Math.random() * 1.25 - 2.5,
-                this.bubblesSpawned++
-            );
-            this.bubbles.add(bubble);
-            this.timer++;
+
+            const newBubblePos = new Phaser.Math.Vector2(Math.random() * this.width, this.height + 128);
+
+            let problem = false;
+            this.bubbles.children.iterate((existingBubble) => {
+                console.log(existingBubble);
+                if (newBubblePos.distance(existingBubble.body.position) < 256) {
+                    problem = true;
+                }
+            })
+            
+            if (!problem){
+                const bubble = new Bubble(
+                    this,
+                    newBubblePos.x,
+                    newBubblePos.y,
+                    Math.random() * 5 - 2.5,
+                    Math.random() * 1.25 - 2.5,
+                    this.bubblesSpawned++,
+                    selectRandom(colors)
+                );
+                this.bubbles.add(bubble);
+                this.timer++;
+            }
         }
     }
 }
