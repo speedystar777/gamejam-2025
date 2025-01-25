@@ -44,8 +44,6 @@ class Game extends Phaser.Scene {
             .setOrigin(0)
             .setStyle({ fontStyle: "bold", fontFamily: "Arial" });
 
-
-
         this.width = this.sys.game.config.width;
         this.height = this.sys.game.config.height;
         this.bubbles = this.add.group();
