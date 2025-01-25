@@ -6,6 +6,13 @@ const outputStride = 16;
 const imageElement = document.getElementById('webcam');
 const debugPos = document.getElementById('debugPos');
 
+var debugPoints = []
+for(var i = 0; i < 17; i++) {
+    debugPoints[i] = debugPos.cloneNode(false);
+    debugPos.parentNode.appendChild(debugPoints[i]);
+    console.log("cloning debugPos");
+}
+
 posenet.load().then(function(net) {
     // posenet model loaded
     console.log("PoseNet model loaded");
@@ -13,10 +20,12 @@ posenet.load().then(function(net) {
 
     function myCallback() {
         net.estimateSinglePose(imageElement, imageScaleFactor, flipHorizontal, outputStride).then(function(pose) {
-            //console.log(pose)
-            var pos = pose.keypoints[0].position;
-            debugPos.style.top = -4 - (256-pos.y);
-            debugPos.style.left = -4 + (256-pos.x);
+            
+            for(var i = 0; i < 17; i++) {
+                var pos = pose.keypoints[i].position;
+                debugPoints[i].style.top = 40 + (pos.y);
+                debugPoints[i].style.left = 4 + (256-pos.x);
+            }
         });
     }
 });
