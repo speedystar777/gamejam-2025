@@ -91,6 +91,10 @@ class Game extends Phaser.Scene {
             this.bubbles.add(bubble);
             this.timer++;
         }
+        if (this.seconds == 0) {
+            this.scene.start('restart', { score: this.popCount })
+        }
     }
+
 }
 
