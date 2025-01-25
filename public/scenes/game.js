@@ -8,13 +8,20 @@ class Game extends Phaser.Scene {
         this.timer = 0;
         this.leftWall = null;
         this.rightWall = null;
+        this.pufferfish = null;
     }
 
     preload() {
-        this.load.image("bubble", "assets/bubble.png");
+        this.load.image('sky', 'assets/orig_big.png');
+        this.load.image('bubble', 'assets/bubble.svg');
     }
 
     create() {
+
+        this.add.image(400, 300, 'sky');
+
+        this.pufferfish = new Pufferfish(this, 0, 0);
+
         this.width = this.sys.game.config.width;
         this.height = this.sys.game.config.height;
         this.bubbles = this.add.group();
@@ -40,8 +47,8 @@ class Game extends Phaser.Scene {
                 this,
                 Math.random() * this.width,
                 this.height + 128,
-                Math.random() * 10 - 5,
-                Math.random() * 2.5 - 5
+                Math.random() * 5 - 2.5,
+                Math.random() * 1.25 - 2.5
             );
             this.bubbles.add(bubble);
             this.timer++;

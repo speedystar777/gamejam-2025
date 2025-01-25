@@ -15,13 +15,14 @@ class Bubble extends Phaser.Physics.Matter.Sprite {
         this.setFriction(0);
         this.setFrictionStatic(1);
         this.setIgnoreGravity(true);
+        //this.setCollisionGroup(2);
     }
 
     preUpdate(time, delta){
         if (this.y < -128) {
             this.destroy();
         } else {
-            //this.setIgnoreGravity(this.getVelocity().y < -1);
+            this.setIgnoreGravity(this.getVelocity().y < -1);
         }
     }
 }
