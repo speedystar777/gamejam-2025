@@ -1,13 +1,24 @@
 class CustomSprite extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y) {
     super(scene, x, y);
-    this.setTexture("blue-box");
+    this.setTexture("red-box");
     this.setPosition(x, y);
     this.count = 0;
   }
 
   update(time, delta) {
     this.count++;
+  }
+}
+
+class ScoreTracker {
+  constructor() {
+    this.score = 0;
+    this.highScore = 0;
+  }
+
+  update() {
+    this.score++;
   }
 }
 
@@ -26,6 +37,7 @@ class Example extends Phaser.Scene {
   }
 
   create() {
+    this.scoreTracker = new ScoreTracker();
     this.add.image(400, 300, "sky");
 
     this.bubble = this.physics.add.image(500, 700, "bubble");
@@ -43,7 +55,7 @@ class Example extends Phaser.Scene {
     graphics.fillRect(0, 0, 10, 10);
     graphics.generateTexture("red-box", 10, 10);
 
-    this.group = this.physics.add.group({
+    this.popper = this.physics.add.group({
       defaultKey: "red-box",
       classType: CustomSprite,
       maxSize: 100,
@@ -51,22 +63,23 @@ class Example extends Phaser.Scene {
       runChildUpdate: true,
     });
 
-    this.group.create(Phaser.Math.RND.between(50, 200), 0);
+    this.popper.create(Phaser.Math.RND.between(50, 200), 0);
   }
 
   update() {
-    Phaser.Actions.IncY(this.group.getChildren(), 1);
+    // Phaser.Actions.IncY(this.popper.getChildren(), 1);
 
-    this.label.setText(`Pop Count: ${this.group.getChildren()[0].count}`);
-
-    this.group.children.iterate((child) => {
+    this.popper.children.iterate((child) => {
       child.x = getOffset(debugPoints[RIGHT_INDEX]).left;
       child.y = getOffset(debugPoints[RIGHT_INDEX]).top;
     });
 
-    this.physics.overlap(this.group.children.entries[0], this.bubble, (sprite, bubble) => {
+    this.physics.overlap(this.popper.getChildren()[0], this.bubble, (_, bubble) => {
       bubble.destroy();
+      this.scoreTracker.update();
     });
+
+    this.label.setText(`Pop Count: ${this.scoreTracker.score}`);
   }
 }
 
