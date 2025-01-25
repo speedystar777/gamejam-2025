@@ -32,7 +32,7 @@ class Game extends Phaser.Scene {
 
         this.pufferfish = new Pufferfish(this, 0, 0);
 
-        this.seconds = 10
+        this.seconds = 20
         this.timerText = this.add.text(window.innerWidth - 150, 10, 'Time Left: ' + this.seconds)
             .setScale(1.5)
             .setStyle({ fontStyle: "bold", fontFamily: "Arial" });
