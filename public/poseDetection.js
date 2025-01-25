@@ -1,22 +1,29 @@
+// helpful doc: https://github.com/llSourcell/pose_estimation/blob/master/README.md
 console.log("Loading PoseNet")
 
-const imageScaleFactor = 0.50;
+const imageScaleFactor = 0.2;
 const flipHorizontal = false;
-const outputStride = 16;
+const outputStride = 32;
 const imageElement = document.getElementById('webcam');
 const debugPos = document.getElementById('debugPos');
 
 var debugPoints = []
 for(var i = 0; i < 17; i++) {
     debugPoints[i] = debugPos.cloneNode(false);
+    if(i == 9) {
+        debugPoints[i].style.backgroundColor = "#f00";
+    }
+    else if(i == 10) {
+        debugPoints[i].style.backgroundColor = "#00f";
+    }
     debugPos.parentNode.appendChild(debugPoints[i]);
-    console.log("cloning debugPos");
 }
+debugPos.remove();
 
 posenet.load().then(function(net) {
     // posenet model loaded
     console.log("PoseNet model loaded");
-    var intervalID = setInterval(myCallback, 100);
+    var intervalID = setInterval(myCallback, 33);
 
     function myCallback() {
         net.estimateSinglePose(imageElement, imageScaleFactor, flipHorizontal, outputStride).then(function(pose) {
