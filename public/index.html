@@ -1,10 +1,28 @@
 <html>
   <head>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"> </script>
+    <!-- Load TensorFlow.js -->
+    <script src="https://unpkg.com/@tensorflow/tfjs"></script>
+    <!-- Load Posenet -->
+    <script src="https://unpkg.com/@tensorflow-models/posenet"></script>
   </head>
   <body>
     <h4>Tiny TFJS example<hr/></h4>
-    <div id="micro-out-div">Training...</div>
-    <script src="./getting-started.js"> </script>
+    <video style="width:512;height:512;" autoplay="true" id="videoElement">
+    </video>
+    <script>
+        var video = document.querySelector("#videoElement");
+
+        if (navigator.mediaDevices.getUserMedia) {
+          navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (stream) {
+              video.srcObject = stream;
+            })
+            .catch(function (err0r) {
+              console.log("Something went wrong!");
+            });
+        }
+    </script>
+    <script src="./posenet.js"> </script>
+
   </body>
 </html>

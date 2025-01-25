@@ -2,6 +2,7 @@
   "name": "gamejam-2025",
   "packageManager": "yarn@4.5.2",
   "dependencies": {
+    "@tensorflow-models/posenet": "^2.2.2",
     "lodash": "^4.17.21"
   }
 }
