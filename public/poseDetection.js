@@ -9,7 +9,7 @@ const debugPos = document.getElementById('debugPos');
 const LEFT_INDEX = 9
 const RIGHT_INDEX = 10
 
-const smoothing = 0.7;
+const smoothing = 0.9;
 var poseHistory = [];
 var debugPoints = [];
 for(var i = 0; i < 17; i++) {
@@ -30,7 +30,7 @@ debugPos.remove();
 posenet.load().then(function(net) {
     // posenet model loaded
     console.log("PoseNet model loaded");
-    var intervalID = setInterval(myCallback, 33);
+    var intervalID = setInterval(myCallback, 16);
 
     function myCallback() {
         net.estimateSinglePose(imageElement, imageScaleFactor, flipHorizontal, outputStride).then(function(pose) {        

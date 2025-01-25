@@ -1,7 +1,7 @@
 class CustomSprite extends Phaser.GameObjects.Sprite {
   constructor(scene, x, y) {
     super(scene, x, y);
-    this.setTexture("red-box");
+    this.setTexture("blue-box");
     this.setPosition(x, y);
     this.count = 0;
   }
@@ -28,10 +28,9 @@ class Example extends Phaser.Scene {
   create() {
     this.add.image(400, 300, "sky");
 
-    const bubble = this.physics.add.image(500, 700, "bubble");
+    this.bubble = this.physics.add.image(500, 700, "bubble");
 
-    bubble.setVelocity(-100, -100);
-    this.test = this.add.sprite(200, 200, "bubble");
+    this.bubble.setVelocity(-100, -100);
 
     this.label = this.add
       .text(10, 10, "Update-function-call-counter")
@@ -44,7 +43,7 @@ class Example extends Phaser.Scene {
     graphics.fillRect(0, 0, 10, 10);
     graphics.generateTexture("red-box", 10, 10);
 
-    this.group = this.add.group({
+    this.group = this.physics.add.group({
       defaultKey: "red-box",
       classType: CustomSprite,
       maxSize: 100,
@@ -64,6 +63,10 @@ class Example extends Phaser.Scene {
       child.x = getOffset(debugPoints[RIGHT_INDEX]).left;
       child.y = getOffset(debugPoints[RIGHT_INDEX]).top;
     });
+
+    this.physics.overlap(this.group.children.entries[0], this.bubble, (sprite, bubble) => {
+      bubble.destroy();
+    });
   }
 }
 
@@ -71,13 +74,15 @@ const config = {
   type: Phaser.AUTO,
   width: window.innerWidth,
   height: window.innerHeight,
-  scene: Example,
+  parent: "phaser-example",
   physics: {
     default: "arcade",
     arcade: {
+      // debug: true,
       gravity: { y: -100 },
     },
   },
+  scene: Example,
 };
 
 const game = new Phaser.Game(config);
