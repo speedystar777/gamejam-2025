@@ -10,5 +10,6 @@ if (navigator.mediaDevices.getUserMedia) {
         })
         .catch(function (error) {
             console.log(error, "\nSomething went wrong!");
+            mouseControlsCheckbox.checked = true;
     });
 }
