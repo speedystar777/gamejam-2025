@@ -59,6 +59,13 @@ class Game extends Phaser.Scene {
                 scene.pop(bodyA);
             } else if (bodyA.label === "pufferfish" && bodyB.label.startsWith("bubble ")) {
                 scene.pop(bodyB);
+            } else {
+                if (bodyA.label.startsWith("bubble ")){
+                    bodyA.gameObject.startBounceAnim();
+                }
+                if (bodyB.label.startsWith("bubble ")) {
+                    bodyB.gameObject.startBounceAnim();
+                }
             }
         });
           

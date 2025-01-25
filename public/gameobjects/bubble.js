@@ -11,6 +11,7 @@ class Bubble extends Phaser.Physics.Matter.Sprite {
                 label: "bubble " + number + ` (${color})`
             }
         );
+        //this.setScale(0.5, 1);
         this.scene = scene;
         this.scene.add.existing(this);
         this.setVelocity(velocityX, velocityY);
@@ -21,6 +22,12 @@ class Bubble extends Phaser.Physics.Matter.Sprite {
         this.setFriction(0);
         this.setFrictionStatic(1);
         this.setIgnoreGravity(true);
+
+        this.bounceAnim = 9999;
+    }
+
+    startBounceAnim(){
+        this.bounceAnim = 0;
     }
 
     preUpdate(time, delta) {
@@ -29,5 +36,13 @@ class Bubble extends Phaser.Physics.Matter.Sprite {
         } else {
             this.setIgnoreGravity(this.getVelocity().y < -1);
         }
+
+        this.bounceAnim += delta;
+
+        const scaleX = (0.1 * Math.sin(this.bounceAnim)) / this.bounceAnim + 1;
+        const scaleY = 1 / scaleX;
+
+        console.log(this, {scaleX, scaleY});
+        this.setScale(scaleX, scaleY);
     }
 }
