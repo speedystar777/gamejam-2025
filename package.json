@@ -1,0 +1,7 @@
+{
+  "name": "gamejam-2025",
+  "packageManager": "yarn@4.5.2",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}
