@@ -6,23 +6,12 @@
     <script src="https://unpkg.com/@tensorflow-models/posenet"></script>
   </head>
   <body>
-    <h4>Tiny TFJS example<hr/></h4>
-    <video style="width:512;height:512;" width="512" height="512" autoplay="true" id="videoElement">
-    </video>
-    <script>
-        var video = document.querySelector("#videoElement");
-
-        if (navigator.mediaDevices.getUserMedia) {
-          navigator.mediaDevices.getUserMedia({ video: true })
-            .then(function (stream) {
-              video.srcObject = stream;
-            })
-            .catch(function (err0r) {
-              console.log("Something went wrong!");
-            });
-        }
-    </script>
-    <script src="./posenet.js"> </script>
+    <h4>TFJS & PoseNet test<hr/></h4>
+    <video autoplay playsinline muted id="webcam" width="256" height="256" style="transform: scaleX(-1);"></video>
+    <div id="debugPos" style="position: relative; top: 0px; left: 0px;z-index: 3;background-color:#ff0000;
+        width:8;height:8;"></div>
+    <script src="./webcamSetup.js"> </script>
+    <script src="./poseDetection.js"> </script>
 
   </body>
 </html>
