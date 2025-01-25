@@ -6,16 +6,18 @@ const flipHorizontal = false;
 const outputStride = 8;
 const imageElement = document.getElementById('webcam');
 const debugPos = document.getElementById('debugPos');
+const LEFT_INDEX = 9
+const RIGHT_INDEX = 10
 
-const smoothing = 0.9;
+const smoothing = 0.7;
 var poseHistory = [];
 var debugPoints = [];
 for(var i = 0; i < 17; i++) {
     debugPoints[i] = debugPos.cloneNode(false);
-    if(i == 9) {
+    if(i == LEFT_INDEX) {
         debugPoints[i].style.backgroundColor = "#f00";
     }
-    else if(i == 10) {
+    else if(i == RIGHT_INDEX) {
         debugPoints[i].style.backgroundColor = "#00f";
     }
     else {
