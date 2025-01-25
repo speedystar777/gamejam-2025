@@ -1,10 +1,3 @@
-console.log("uhm")
-
-posenet.load().then(function (net) {
-    // posenet model loaded
-    console.log("posenet model loaded");
-});
-
 const mouseControlsCheckbox = document.getElementById("mouse-controls");
 function mouseControlsEnabled() {
     return mouseControlsCheckbox.checked;
