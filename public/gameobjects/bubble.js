@@ -1,7 +1,6 @@
 class Bubble extends Phaser.Physics.Matter.Sprite {
     constructor(scene, x, y, velocityX, velocityY, number) {
         super(scene.matter.world, x, y, "bubble", null, { shape: "circle", label: "bubble " + number });
-        this.setScale(0.25);
         this.scene = scene;
         this.scene.add.existing(this);
         this.setVelocity(velocityX, velocityY);
