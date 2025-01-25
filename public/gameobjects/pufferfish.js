@@ -6,7 +6,6 @@ class Pufferfish extends Phaser.Physics.Matter.Sprite {
         this.scene.add.existing(this);
 
         scene.input.on('pointermove', function (pointer) {
-            console.log(mouseControlsEnabled());
             if (mouseControlsEnabled()) {
                 puffer.x = pointer.position.x;
                 puffer.y = pointer.position.y;

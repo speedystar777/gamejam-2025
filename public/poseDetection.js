@@ -6,8 +6,8 @@ const flipHorizontal = false;
 const outputStride = 8;
 const imageElement = document.getElementById('webcam');
 const debugPos = document.getElementById('debugPos');
-const LEFT_INDEX = 9
-const RIGHT_INDEX = 10
+const LEFT_INDEX = 9;
+const RIGHT_INDEX = 10;
 
 let debugPoints = null;
 
@@ -17,15 +17,16 @@ if (imageElement) { // imageelement is falsey when there is no webcam
     debugPoints = [];
     for (var i = 0; i < 17; i++) {
         debugPoints[i] = debugPos.cloneNode(false);
-        if (i == LEFT_INDEX) {
-            debugPoints[i].style.backgroundColor = "#f00";
-        }
-        else if (i == RIGHT_INDEX) {
-            debugPoints[i].style.backgroundColor = "#00f";
-        }
-        else {
-            debugPoints[i].style.zIndex = -1;
-        }
+        // if (i == LEFT_INDEX) {
+        //     debugPoints[i].style.backgroundColor = "#f00";
+        // }
+        // else if (i == RIGHT_INDEX) {
+        //     debugPoints[i].style.backgroundColor = "#00f";
+        // }
+        // else {
+        //     debugPoints[i].style.zIndex = -1;
+        // }
+        debugPoints[i].style.zIndex = -1;
         debugPos.parentNode.appendChild(debugPoints[i]);
     }
     debugPos.remove();
