@@ -29,6 +29,8 @@ class Game extends Phaser.Scene {
             this.load.image(`${color} bubble`, `assets/textures/${color}_bubble.png`);
         });
         this.load.json('shapes', 'assets/physics_shapes.json');
+        this.load.audio("bubblePop", "assets/audio/bubblePop.mp3");
+        this.load.audio("bubbleSpawn", "assets/audio/bubbleSpawn.mp3");
     }
 
     create() {
@@ -122,6 +124,7 @@ class Game extends Phaser.Scene {
             this.incorrectPopCount++;
         }
         bubble.gameObject.destroy();
+        this.sound.play("bubblePop");
     }
 
     score() {
@@ -159,6 +162,7 @@ class Game extends Phaser.Scene {
                     Math.random() < 0.5 ? selectRandom(colors) : this.targetColor
                 );
                 const bubbleVisual = new BubbleVisual(this, newBubblePos.x, newBubblePos.y, bubble);
+                this.sound.play("bubbleSpawn");
                 this.bubbles.add(bubble);
                 this.timer++;
             }
