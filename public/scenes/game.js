@@ -164,7 +164,7 @@ class Game extends Phaser.Scene {
     update(time, delta) {
         this.timeStamp = time;
         this.highScoreLabel.setText(`High Score: ${(lang === 'english' ? this.highScore : convertToSanskrit(this.highScore))}`);
-        this.scoreLabel.setText(`Score: ${(lang === 'english' ? this.score() : convertToSanskrit(this.score()))}\nCurrent color: ${this.targetColor}`);
+        this.scoreLabel.setText(`Score: ${(lang === 'english' ? this.score() : convertToSanskrit(this.score()))}`);
 
         this.timer -= delta / 1000;
         if (this.timer < 0 && this.seconds > 0) {
