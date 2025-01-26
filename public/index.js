@@ -2,7 +2,7 @@ const config = {
     type: Phaser.AUTO,
     width: window.innerWidth,
     height: window.innerHeight,
-    scene: [Start, Game, Restart],
+    scene: [Start, Game, Restart, Pause],
     physics: {
         default: "matter",
         matter: {

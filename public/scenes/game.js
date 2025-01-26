@@ -22,27 +22,27 @@ class Game extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('sky', 'assets/orig_big.png');
+        this.load.image('sea', 'assets/orig_big.png');
         this.load.image('bubble', 'assets/bubble.svg');
     }
 
     create() {
 
-        this.add.image(400, 300, 'sky');
+        this.add.image(400, 300, 'sea');
 
         this.pufferfish = new Pufferfish(this, 0, 0);
 
         this.seconds = 10
-        this.timerText = this.add.text(window.innerWidth - 150, 10, 'Time Left: ' + this.seconds)
-            .setScale(1.5)
-            .setStyle({ fontStyle: "bold", fontFamily: "Arial" });
+        this.timerText = this.add.text(window.innerWidth - 200, 10, 'Time Left: ' + this.seconds)
+            .setStyle({ fontSize: 25 });
         this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.timeEventCallback, callbackScope: this, repeat: -1 });
+
+        this.pauseButton = this.add.text(window.innerWidth - 200, 40, 'Pause', { fontSize: 25 }).setInteractive();
 
         this.label = this.add
             .text(10, 10, "Update-function-call-counter")
-            .setScale(1.5)
             .setOrigin(0)
-            .setStyle({ fontStyle: "bold", fontFamily: "Arial" });
+            .setStyle({ fontSize: 25 });
 
         this.width = this.sys.game.config.width;
         this.height = this.sys.game.config.height;
@@ -71,6 +71,11 @@ class Game extends Phaser.Scene {
                 scene.popCount++;
             }
         });
+
+        this.pauseButton.on('pointerdown', function () {
+            this.scene.launch('pause')
+            this.scene.pause();
+        }, this)
 
     }
 
