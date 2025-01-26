@@ -7,11 +7,13 @@ class Bubble extends Phaser.Physics.Matter.Sprite {
             `${color} bubble`,
             null,
             {
-                shape: "circle",
-                label: "bubble " + number + ` (${color})`
+                shape: scene.cache.json.get('shapes')[`${color}_bubble`]
             }
         );
-        //this.setScale(0.5, 1);
+
+        this.setData("bubble", true);
+        this.setData("color", color);
+
         this.scene = scene;
         this.scene.add.existing(this);
         this.setVelocity(velocityX, velocityY);
@@ -31,18 +33,24 @@ class Bubble extends Phaser.Physics.Matter.Sprite {
     }
 
     preUpdate(time, delta) {
-        if (this.y < -128) {
+        if (this.y < -256) {
             this.destroy();
         } else {
             this.setIgnoreGravity(this.getVelocity().y < -1);
         }
 
-        this.bounceAnim += delta;
+        this.bounceAnim += delta / 1000;
 
-        const scaleX = (0.1 * Math.sin(this.bounceAnim)) / this.bounceAnim + 1;
+        const scaleX = (1000 * Math.cos(this.bounceAnim)) / this.bounceAnim + 1;
+        //const scaleX = 1 + Math.sin(time) * 0.25;
         const scaleY = 1 / scaleX;
 
         console.log(this, {scaleX, scaleY});
-        this.setScale(scaleX, scaleY);
+        if (this.body) {
+            //console.log("yes");
+            this.setDisplaySize(scaleX, scaleY);
+        } else {
+            console.log("no");
+        }
     }
 }
