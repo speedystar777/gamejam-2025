@@ -20,42 +20,11 @@ class Start extends Phaser.Scene {
 
   create() {
     background(this);
-
     var bgLoop = this.sound.add("bg-loop");
     bgLoop.setLoop(true);
     bgLoop.play();
-
-    const screenCenterX =
-      this.cameras.main.worldView.x + this.cameras.main.width / 2;
-    const screenCenterY =
-      this.cameras.main.worldView.y + this.cameras.main.height / 2;
-    this.add
-      .text(screenCenterX, screenCenterY - 100, "Bubble Burst!", {
-        fontSize: 100,
-      })
-      .setOrigin(0.5);
-
-    controlsSelectionCreate(this);
-    
-    const bg = this.add.image(0, 0, "start");
-    const container = this.add.container(screenCenterX, screenCenterY + 100, [
-      bg,
-    ]);
-
-    container.setSize(bg.width, bg.height);
-    container.setInteractive();
-
-    container.on("pointerover", () => {
-      bg.setTint(0x83d2e6);
-    });
-    container.on("pointerout", () => {
-      bg.clearTint();
-    });
-    container.on("pointerdown", () => {
-      this.scene.start("game");
-    });
-  }
-  update(){
-    controlselectionUpdate(this);
+    title(this, "Bubble Burst!");
+    const startScene = this.scene;
+    button(this, "start", () => startScene.start("instructions"));
   }
 }
