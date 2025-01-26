@@ -10,7 +10,6 @@ const config = {
                 x: 0,
                 y: -1,
             },
-            // debug: true,
             restingThresh: 0.004
         },
     },
