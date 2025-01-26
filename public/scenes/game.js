@@ -1,30 +1,31 @@
 class Game extends Phaser.Scene {
-  constructor() {
-    super({ key: "game" });
-  }
-
-  timeEventCallback() {
-    this.seconds--;
-    this.timerText.setText("Time Left: " + this.seconds);
-    if (this.seconds === 0) {
-      this.timedEvent.paused = true;
+    constructor() {
+        super({ key: "game" });
     }
-  }
 
-  init(data) {
-    this.targetColor = selectRandom(colors);
-    this.timer = 0;
-    this.correctPopCount = 0;
-    this.incorrectPopCount = 0;
-    this.highScore = data?.highScore || 0;
-    this.bubblesSpawned = 0;
-    this.leftWall = null;
-    this.rightWall = null;
-    this.pufferfish = null;
-  }
+    timeEventCallback() {
+        this.seconds--;
+        this.timerText.setText("Time Left: " + this.seconds);
+        if (this.seconds === 0) {
+            this.timedEvent.paused = true;
+        }
+    }
+
+    init(data) {
+        this.targetColor = selectRandom(colors);
+        this.timer = 0;
+        this.correctPopCount = 0;
+        this.incorrectPopCount = 0;
+        this.highScore = data?.highScore || 0;
+        this.bubblesSpawned = 0;
+        this.leftWall = null;
+        this.rightWall = null;
+        this.pufferfish = null;
+    }
 
     preload() {
-        this.load.image('sky', 'assets/orig_big.png');
+        this.load.image('sea', 'assets/orig_big.png');
+        this.load.image('bubble', 'assets/bubble.svg');
         colors.forEach((color) => {
             this.load.image(`${color} bubble`, `assets/${color}_bubble.png`);
         });
@@ -103,9 +104,14 @@ class Game extends Phaser.Scene {
             }
         });
 
+        this.pauseButton.on('pointerdown', function () {
+            this.scene.launch('pause')
+            this.scene.pause();
+        }, this)
+
     }
 
-    pop(bubble){
+    pop(bubble) {
         if (bubble.gameObject.getData("color") === this.targetColor) {
             this.correctPopCount++;
         } else {
@@ -114,13 +120,13 @@ class Game extends Phaser.Scene {
         bubble.gameObject.destroy();
     }
 
-    score(){
-      return this.correctPopCount * 10 - this.incorrectPopCount * 3;
+    score() {
+        return this.correctPopCount * 10 - this.incorrectPopCount * 3;
     }
 
-  update(time, delta) {
-    this.highScoreLabel.setText(`High Score: ${this.highScore}`);
-    this.scoreLabel.setText(`Score: ${this.score()}\nCurrent color: ${this.targetColor}`);
+    update(time, delta) {
+        this.highScoreLabel.setText(`High Score: ${this.highScore}`);
+        this.scoreLabel.setText(`Score: ${this.score()}\nCurrent color: ${this.targetColor}`);
 
         this.timer -= delta / 1000;
         if (this.timer < 0 && this.seconds > 0) {
@@ -136,8 +142,8 @@ class Game extends Phaser.Scene {
                     problem = true;
                 }
             })
-            
-            if (!problem){
+
+            if (!problem) {
                 const bubble = new Bubble(
                     this,
                     newBubblePos.x,
