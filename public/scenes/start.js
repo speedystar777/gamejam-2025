@@ -24,7 +24,7 @@ class Start extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(400, 300, "sky");
+    background(this);
 
     const screenCenterX =
       this.cameras.main.worldView.x + this.cameras.main.width / 2;
