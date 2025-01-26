@@ -50,7 +50,7 @@ function controlsSelectionCreate(scene) {
         strokeThickness: 2
     }).setInteractive().setOrigin(0.5);
 
-    scene.cameraControls = scene.add.text(screenCenterX+ 150, screenCenterY + 50, 'camera controls', {
+    scene.cameraControls = scene.add.text(screenCenterX + 150, screenCenterY + 50, 'camera controls', {
         fontSize: 25,
         stroke: 'black',
         strokeThickness: 2
