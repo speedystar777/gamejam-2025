@@ -19,8 +19,7 @@ class Pause extends Phaser.Scene {
     this.add.text(window.innerWidth / 2 - 150, window.innerHeight / 2, 'use mouse controls?', { fontSize: 20 })
     this.mouseYes = this.add.text(window.innerWidth / 2 + 100, window.innerHeight / 2, 'y', { fontSize: 20 }).setInteractive();
     this.mouseNo = this.add.text(window.innerWidth / 2 + 155, window.innerHeight / 2, 'n', { fontSize: 20 }).setInteractive();
-    // this.restartButton = this.add.text(window.innerWidth / 2 - 50, window.innerHeight / 2 + 200, 'restart', { fontSize: 25 }).setInteractive();
-
+    
     const screenCenterX =
       this.cameras.main.worldView.x + this.cameras.main.width / 2;
     const screenCenterY =
