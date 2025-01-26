@@ -83,7 +83,7 @@ class Game extends Phaser.Scene {
             .text(screen.width / 2, 10,
                 `Pop ${this.targetColor} bubbles!`, {
                 fontSize: 25,
-                stroke: 'black',
+                stroke: this.targetColor,
                 strokeThickness: 2,
             })
             .setOrigin(0.5, 0);
