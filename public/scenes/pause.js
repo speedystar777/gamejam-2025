@@ -13,7 +13,7 @@ class Pause extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(400, 300, 'sky');
+    background(this);
     this.blackFade = this.add.rectangle(0, 0, window.innerWidth * 2, window.innerHeight * 2, 0);
     this.blackFade.setAlpha(0.5);
     controlsSelectionCreate(this);
