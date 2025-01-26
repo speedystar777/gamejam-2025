@@ -40,9 +40,22 @@ class Start extends Phaser.Scene {
       .text(screenCenterX, screenCenterY + 30, "Click to Start", {
         fontSize: 50,
       })
-      .setOrigin(0.5);
-    this.input.on("pointerdown", function () {
+      .setOrigin(0.5).setInteractive();
+
+    this.add.text(window.innerWidth / 2 - 150, window.innerHeight / 2 + 70, 'use mouse controls?', { fontSize: 20 })
+    this.mouseYes = this.add.text(window.innerWidth / 2 + 100, window.innerHeight / 2 + 70, 'y', { fontSize: 20 }).setInteractive();
+    this.mouseNo = this.add.text(window.innerWidth / 2 + 155, window.innerHeight / 2 + 70, 'n', { fontSize: 20 }).setInteractive();
+
+    this.startButton.on("pointerdown", function () {
       this.scene.start('game');
+    }, this);
+
+    this.mouseYes.on('pointerdown', function () {
+      mouseControlsCheckbox.checked = true;
+    }, this);
+
+    this.mouseNo.on('pointerdown', function () {
+      mouseControlsCheckbox.checked = false;
     }, this);
   }
 

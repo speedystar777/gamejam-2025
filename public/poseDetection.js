@@ -11,7 +11,7 @@ const RIGHT_INDEX = 10;
 
 let debugPoints = null;
 
-if (imageElement.srcObject) {
+if (imageElement) {
     const smoothing = 0.9;
     var poseHistory = [];
     debugPoints = [];
