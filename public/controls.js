@@ -40,7 +40,7 @@ function cameraAvailable() {
 
 function controlsSelectionCreate(scene, y = null){
     scene.mouseControls = scene.add.text(window.innerWidth / 2 - 150, y ?? (window.innerHeight / 2), 'mouse controls', { fontSize: 20 }).setInteractive().setOrigin(0.5);
-    scene.cameraControls = scene.add.text(window.innerWidth / 2 + 150, y ?? (window.innerHeight / 2), 'camera controls\n(use right)', { fontSize: 20 }).setInteractive().setOrigin(0.5);
+    scene.cameraControls = scene.add.text(window.innerWidth / 2 + 150, y ?? (window.innerHeight / 2), 'camera controls\n(use right hand)', { fontSize: 20 }).setInteractive().setOrigin(0.5);
 
     if (controller === "mouse") {
         scene.mouseControls.setTint(0xfc49dc);
