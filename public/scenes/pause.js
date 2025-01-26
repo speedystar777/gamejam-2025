@@ -17,7 +17,7 @@ class Pause extends Phaser.Scene {
     this.blackFade = this.add.rectangle(0, 0, window.innerWidth * 2, window.innerHeight * 2, 0);
     this.blackFade.setAlpha(0.5);
     controlsSelectionCreate(this);
-    languageSelectionCreate(this, window.innerHeight / 2 + 50)
+    languageSelectionCreate(this, window.innerHeight / 2)
     title(this, 'PAUSED');
 
     const pauseScene = this.scene;
@@ -32,7 +32,7 @@ class Pause extends Phaser.Scene {
   }
 
   update() {
-    controlselectionUpdate(this);
+    controlsSelectionUpdate(this);
     languageSelectionUpdate(this);
   }
 }
