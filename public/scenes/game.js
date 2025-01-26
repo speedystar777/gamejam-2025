@@ -105,7 +105,7 @@ class Game extends Phaser.Scene {
         });
 
         this.pauseButton.on('pointerdown', function () {
-            this.scene.launch('pause')
+            this.scene.launch('pause', { currentHighScore: this.highScore })
             this.scene.pause();
         }, this)
 

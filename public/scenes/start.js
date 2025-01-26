@@ -3,14 +3,6 @@ class Start extends Phaser.Scene {
     super({ key: "start" });
   }
 
-  // timeEventCallback() {
-  //     this.seconds--;
-  //     this.timerText.setText('Time Left: ' + this.seconds);
-  //     if (this.seconds === 0) {
-  //         this.timedEvent.paused = true;
-  //     }
-  // }
-
   init() {
     this.timer = 0;
     this.bubblesSpawned = 0;
@@ -21,6 +13,7 @@ class Start extends Phaser.Scene {
 
   preload() {
     this.load.image("sky", "assets/orig_big.png");
+    this.load.image("start", "assets/start.png");
   }
 
   create() {
@@ -36,45 +29,39 @@ class Start extends Phaser.Scene {
       })
       .setOrigin(0.5);
 
-    this.startButton = this.add
-      .text(screenCenterX, screenCenterY + 30, "Click to Start", {
-        fontSize: 50,
-      })
-      .setOrigin(0.5).setInteractive();
+    this.add.text(window.innerWidth / 2 - 150, screenCenterY - 15, 'use mouse controls?', { fontSize: 20 })
+    this.mouseYes = this.add.text(window.innerWidth / 2 + 105, screenCenterY - 15, 'y', { fontSize: 20 }).setInteractive();
+    this.mouseNo = this.add.text(window.innerWidth / 2 + 155, screenCenterY - 15, 'n', { fontSize: 20 }).setInteractive();
+    
+    const bg = this.add.image(0, 0, "start");
+    const container = this.add.container(screenCenterX, screenCenterY + 100, [
+      bg,
+    ]);
 
-    this.add.text(window.innerWidth / 2 - 150, window.innerHeight / 2 + 70, 'use mouse controls?', { fontSize: 20 })
-    this.mouseYes = this.add.text(window.innerWidth / 2 + 100, window.innerHeight / 2 + 70, 'y', { fontSize: 20 }).setInteractive();
-    this.mouseNo = this.add.text(window.innerWidth / 2 + 155, window.innerHeight / 2 + 70, 'n', { fontSize: 20 }).setInteractive();
+    container.setSize(bg.width, bg.height);
+    container.setInteractive();
 
-    this.startButton.on("pointerdown", function () {
-      this.scene.start('game');
-    }, this);
-
+    container.on("pointerover", () => {
+      bg.setTint(0x83d2e6);
+    });
+    container.on("pointerout", () => {
+      bg.clearTint();
+    });
+    container.on("pointerdown", () => {
+      this.scene.start("game");
+    });
+  }
+  update(){
     this.mouseYes.on('pointerdown', function () {
       mouseControlsCheckbox.checked = true;
+      this.mouseYes.setTint(0xfc49dc);
+      this.mouseNo.clearTint();
     }, this);
 
     this.mouseNo.on('pointerdown', function () {
       mouseControlsCheckbox.checked = false;
+      this.mouseNo.setTint(0xfc49dc);
+      this.mouseYes.clearTint();
     }, this);
   }
-
-  // update(time, delta) {
-
-  //     this.label.setText(`Pop Count: ${this.popCount}`);
-
-  //     this.timer -= delta / 1000;
-  //     if (this.timer < 0 && this.seconds > 0) {
-  //         const bubble = new Bubble(
-  //             this,
-  //             Math.random() * this.width,
-  //             this.height + 128,
-  //             Math.random() * 5 - 2.5,
-  //             Math.random() * 1.25 - 2.5,
-  //             this.bubblesSpawned++
-  //         );
-  //         this.bubbles.add(bubble);
-  //         this.timer++;
-  //     }
-  // }
 }
