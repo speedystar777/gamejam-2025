@@ -1,4 +1,5 @@
 class Start extends Phaser.Scene {
+
   constructor() {
     super({ key: "start" });
   }
@@ -12,12 +13,16 @@ class Start extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("sky", "assets/orig_big.png");
-    this.load.image("start", "assets/start.png");
+    this.load.image("sky", "assets/textures/orig_big.png");
+    this.load.image("start", "assets/textures/start.png");
+    this.load.audio("bg-loop", "assets/audio/backgroundAmbianceSong1.mp3");
   }
 
   create() {
     background(this);
+    var bgLoop = this.sound.add("bg-loop");
+    bgLoop.setLoop(true);
+    bgLoop.play();
     title(this, "Bubble Burst!");
     const startScene = this.scene;
     button(this, "start", () => startScene.start("instructions"));

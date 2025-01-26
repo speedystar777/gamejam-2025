@@ -24,16 +24,22 @@ class Game extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('sea', 'assets/orig_big.png');
+        this.load.image('sea', 'assets/textures/orig_big.png');
         colors.forEach((color) => {
-            this.load.image(`${color} bubble`, `assets/${color}_bubble.png`);
+            this.load.image(`${color} bubble`, `assets/textures/${color}_bubble.png`);
         });
         this.load.json('shapes', 'assets/physics_shapes.json');
+        this.load.audio("bubblePop", "assets/audio/bubblePop.mp3");
+        this.load.audio("bubbleSpawn", "assets/audio/bubbleSpawn.mp3");
+        this.load.audio("gameEnding", "assets/audio/gameEnding.mp3");
+        this.load.audio("gameStart", "assets/audio/potentialGameStart_fupicat__congrats.mp3");
     }
 
     create() {
 
         background(this);
+
+        this.sound.play("gameStart");
 
         this.pufferfish = new Pufferfish(this, 0, 0);
 
@@ -148,6 +154,7 @@ class Game extends Phaser.Scene {
             this.incorrectPopCount++;
         }
         bubble.gameObject.destroy();
+        this.sound.play("bubblePop");
     }
 
     score() {
@@ -185,12 +192,14 @@ class Game extends Phaser.Scene {
                     Math.random() < 0.5 ? selectRandom(colors) : this.targetColor
                 );
                 const bubbleVisual = new BubbleVisual(this, newBubblePos.x, newBubblePos.y, bubble);
+                this.sound.play("bubbleSpawn");
                 this.bubbles.add(bubble);
                 this.timer++;
             }
         }
         if (this.seconds == 0) {
             const score = this.score();
+            this.sound.play("gameEnding");
             this.scene.start('restart', { currentHighScore: this.highScore, score });
         }
 
