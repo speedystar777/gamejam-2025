@@ -15,4 +15,4 @@ function selectRandom(array){
     return array[Math.floor(Math.random() * array.length)];
 }
 
-const colors = ["blue", "green", "purple", "red", "yellow"];
+const colors = ["blue", "green", "red", "yellow"];
