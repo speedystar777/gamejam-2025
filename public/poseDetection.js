@@ -34,13 +34,6 @@ posenet.load().then(function (net) {
     var intervalID = setInterval(myCallback, 16);
 
     function myCallback() {
-        /*console.log(
-            "imageElement:", existsFmt(video),
-            "srcObject:", existsFmt(video?.srcObject),
-            "active:", video?.srcObject?.active,
-            "video tracks:", video?.srcObject?.getVideoTracks().length,
-            "resolution:", video?.videoWidth, "by", video?.videoHeight
-        );*/
         if (controller === "camera" && cameraAvailable()) {
             net.estimateSinglePose(video, imageScaleFactor, flipHorizontal, outputStride).then(function (pose) {
                 for (var i = 0; i < 17; i++) {

@@ -11,6 +11,7 @@ function selectRandom(array) {
 }
 
 const colors = ["blue", "green", "purple", "red", "yellow"];
+const sanskritColors = ["nīlavarṇaḥ", "haritavarṇaḥ", "saṅkṣiptavarṇaḥ", "raktavarṇaḥ", "pītavarṇaḥ"];
 
 const textFormat = {
     stroke: 'black',
