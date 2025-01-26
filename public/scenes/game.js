@@ -47,17 +47,15 @@ class Game extends Phaser.Scene {
         this.seconds = 45
         this.timerText = this.add.text(window.innerWidth - 200, 10, 'Time Left: ' + this.seconds)
             .setStyle({
-                fontSize: 25,
-                stroke: 'black',
-                strokeThickness: 2,
+                ...textFormat,
+                fontSize: 25
             });
 
         this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.timeEventCallback, callbackScope: this, repeat: -1 });
 
         this.pauseButton = this.add.text(window.innerWidth - 200, 40, 'Pause', {
-            fontSize: 25,
-            stroke: 'black',
-            strokeThickness: 2,
+            ...textFormat,
+            fontSize: 25
         }).setInteractive();
 
 
@@ -65,26 +63,24 @@ class Game extends Phaser.Scene {
             .text(10, 40, "Update-function-call-counter")
             .setOrigin(0)
             .setStyle({
-                fontSize: 25,
-                stroke: 'black',
-                strokeThickness: 2,
+                ...textFormat,
+                fontSize: 25
             });
 
         this.highScoreLabel = this.add
             .text(10, 10, "Update-function-call-counter")
             .setOrigin(0)
             .setStyle({
+                ...textFormat,
                 fontSize: 25,
-                stroke: 'black',
-                strokeThickness: 2,
             });
 
         this.colorLabel = this.add
             .text(screen.width / 2, 10,
                 `Pop ${this.targetColor} bubbles!`, {
+                ...textFormat,
                 fontSize: 25,
-                stroke: this.targetColor,
-                strokeThickness: 2,
+                stroke: this.targetColor
             })
             .setOrigin(0.5, 0);
 

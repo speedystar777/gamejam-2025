@@ -12,6 +12,12 @@ function selectRandom(array) {
 
 const colors = ["blue", "green", "purple", "red", "yellow"];
 
+const textFormat = {
+    stroke: 'black',
+    strokeThickness: 2,
+    fontStyle: "bold"
+};
+
 function background(scene) {
 
     const backgroundWidth = 2304;
@@ -45,15 +51,13 @@ function controlsSelectionCreate(scene) {
         scene.cameras.main.worldView.y + scene.cameras.main.height / 2;
 
     scene.mouseControls = scene.add.text(screenCenterX - 150, screenCenterY + 50, 'mouse controls', {
+        ...textFormat,
         fontSize: 25,
-        stroke: 'black',
-        strokeThickness: 2
     }).setInteractive().setOrigin(0.5);
 
     scene.cameraControls = scene.add.text(screenCenterX+ 150, screenCenterY + 50, 'camera controls', {
+        ...textFormat,
         fontSize: 25,
-        stroke: 'black',
-        strokeThickness: 2
     }).setInteractive().setOrigin(0.5);
 
     if (controller === "mouse") {
@@ -89,9 +93,8 @@ function title(scene, text) {
     scene.add
         .text(screenCenterX, screenCenterY - 150,
             text, {
-            fontSize: 100,
-            stroke: 'black',
-            strokeThickness: 2,
+            ...textFormat,
+            fontSize: 100
         })
         .setOrigin(0.5);
 }
@@ -106,9 +109,8 @@ function content(scene, text, fontSize = 25) {
     scene.add
         .text(screenCenterX, screenCenterY - 37.5,
             text, {
+            ...textFormat,
             wordWrap: { width: scene.cameras.main.width / 2 },
-            stroke: 'black',
-            strokeThickness: 2,
             fontSize
         })
         .setOrigin(0.5);
