@@ -31,6 +31,7 @@ class Game extends Phaser.Scene {
         this.load.json('shapes', 'assets/physics_shapes.json');
         this.load.audio("bubblePop", "assets/audio/bubblePop.mp3");
         this.load.audio("bubbleSpawn", "assets/audio/bubbleSpawn.mp3");
+        this.load.audio("gameEnding", "assets/audio/gameEnding.mp3");
     }
 
     create() {
@@ -169,6 +170,7 @@ class Game extends Phaser.Scene {
         }
         if (this.seconds == 0) {
             const score = this.score();
+            this.sound.play("gameEnding");
             this.scene.start('restart', { currentHighScore: this.highScore, score });
         }
 

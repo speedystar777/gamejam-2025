@@ -9,6 +9,7 @@ class Restart extends Phaser.Scene {
   preload() {
     this.load.image("sky", "assets/textures/orig_big.png");
     this.load.image("restart", "assets/textures/restart.png");
+    this.load.audio("highScore", "assets/audio/highScore1__nomiqbomi__congrats-1.mp3");
   }
   create() {
     background(this);
@@ -53,6 +54,7 @@ class Restart extends Phaser.Scene {
     let newHighScore = this.currentHighScore;
     if (this.currentHighScore < this.finalScore) {
       newHighScore = this.finalScore;
+      this.sound.play("highScore", {delay: 1});
     }
 
     container.setSize(bg.width, bg.height);
