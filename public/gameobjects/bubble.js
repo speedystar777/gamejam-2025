@@ -1,6 +1,19 @@
 class Bubble extends Phaser.Physics.Matter.Sprite {
-    constructor(scene, x, y, velocityX, velocityY, number) {
-        super(scene.matter.world, x, y, "bubble", null, { shape: "circle", label: "bubble " + number });
+    constructor(scene, x, y, velocityX, velocityY, number, color) {
+        super(
+            scene.matter.world,
+            x,
+            y,
+            `${color} bubble`,
+            null,
+            {
+                shape: scene.cache.json.get('shapes')[`${color}_bubble`]
+            }
+        );
+
+        this.setData("bubble", true);
+        this.setData("color", color);
+
         this.scene = scene;
         this.scene.add.existing(this);
         this.setVelocity(velocityX, velocityY);
@@ -14,7 +27,7 @@ class Bubble extends Phaser.Physics.Matter.Sprite {
     }
 
     preUpdate(time, delta) {
-        if (this.y < -128) {
+        if (this.y < -256) {
             this.destroy();
         } else {
             this.setIgnoreGravity(this.getVelocity().y < -1);

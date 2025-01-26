@@ -11,7 +11,7 @@ const RIGHT_INDEX = 10;
 
 let debugPoints = null;
 
-if (imageElement) { // imageelement is falsey when there is no webcam
+if (imageElement.srcObject) {
     const smoothing = 0.9;
     var poseHistory = [];
     debugPoints = [];

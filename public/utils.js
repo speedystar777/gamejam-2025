@@ -10,3 +10,9 @@ function getOffset(el) {
         top: rect?.top + window.scrollY,
     };
 }
+
+function selectRandom(array){
+    return array[Math.floor(Math.random() * array.length)];
+}
+
+const colors = ["blue", "green", "purple", "red", "yellow"];

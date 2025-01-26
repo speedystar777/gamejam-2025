@@ -13,7 +13,6 @@ class Start extends Phaser.Scene {
 
   init() {
     this.timer = 0;
-    this.popCount = 0;
     this.bubblesSpawned = 0;
     this.leftWall = null;
     this.rightWall = null;
