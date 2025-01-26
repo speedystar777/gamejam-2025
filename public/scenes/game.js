@@ -32,11 +32,14 @@ class Game extends Phaser.Scene {
         this.load.audio("bubblePop", "assets/audio/bubblePop.mp3");
         this.load.audio("bubbleSpawn", "assets/audio/bubbleSpawn.mp3");
         this.load.audio("gameEnding", "assets/audio/gameEnding.mp3");
+        this.load.audio("gameStart", "assets/audio/potentialGameStart_fupicat__congrats.mp3");
     }
 
     create() {
 
         background(this);
+
+        this.sound.play("gameStart");
 
         this.pufferfish = new Pufferfish(this, 0, 0);
 
