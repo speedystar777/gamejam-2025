@@ -24,37 +24,69 @@ class Game extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('sea', 'assets/orig_big.png');
+        this.load.image('sea', 'assets/textures/orig_big.png');
         colors.forEach((color) => {
-            this.load.image(`${color} bubble`, `assets/${color}_bubble.png`);
+            this.load.image(`${color} bubble`, `assets/textures/${color}_bubble.png`);
         });
         this.load.json('shapes', 'assets/physics_shapes.json');
         this.load.image('pufferfish', 'assets/pufferfish.png');
+        this.load.audio("bubblePop", "assets/audio/bubblePop.mp3");
+        this.load.audio("bubbleSpawn", "assets/audio/bubbleSpawn.mp3");
+        this.load.audio("gameEnding", "assets/audio/gameEnding.mp3");
+        this.load.audio("gameStart", "assets/audio/potentialGameStart_fupicat__congrats.mp3");
     }
 
     create() {
 
         background(this);
 
+        this.sound.play("gameStart");
+
         this.pufferfish = new Pufferfish(this, 0, 0);
 
         this.seconds = 45
         this.timerText = this.add.text(window.innerWidth - 200, 10, 'Time Left: ' + this.seconds)
-            .setStyle({ fontSize: 25 });
+            .setStyle({
+                fontSize: 25,
+                stroke: 'black',
+                strokeThickness: 2,
+            });
+
         this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.timeEventCallback, callbackScope: this, repeat: -1 });
 
-        this.pauseButton = this.add.text(window.innerWidth - 200, 40, 'Pause', { fontSize: 25 }).setInteractive();
+        this.pauseButton = this.add.text(window.innerWidth - 200, 40, 'Pause', {
+            fontSize: 25,
+            stroke: 'black',
+            strokeThickness: 2,
+        }).setInteractive();
 
 
         this.scoreLabel = this.add
             .text(10, 40, "Update-function-call-counter")
             .setOrigin(0)
-            .setStyle({ fontSize: 25 });
+            .setStyle({
+                fontSize: 25,
+                stroke: 'black',
+                strokeThickness: 2,
+            });
 
         this.highScoreLabel = this.add
             .text(10, 10, "Update-function-call-counter")
             .setOrigin(0)
-            .setStyle({ fontSize: 25 });
+            .setStyle({
+                fontSize: 25,
+                stroke: 'black',
+                strokeThickness: 2,
+            });
+
+        this.colorLabel = this.add
+            .text(screen.width / 2, 10,
+                `Pop ${this.targetColor} bubbles!`, {
+                fontSize: 25,
+                stroke: 'black',
+                strokeThickness: 2,
+            })
+            .setOrigin(0.5, 0);
 
         this.width = this.sys.game.config.width;
         this.height = this.sys.game.config.height;
@@ -123,6 +155,7 @@ class Game extends Phaser.Scene {
             this.incorrectPopCount++;
         }
         bubble.gameObject.destroy();
+        this.sound.play("bubblePop");
     }
 
     score() {
@@ -132,7 +165,7 @@ class Game extends Phaser.Scene {
     update(time, delta) {
         this.timeStamp = time;
         this.highScoreLabel.setText(`High Score: ${this.highScore}`);
-        this.scoreLabel.setText(`Score: ${this.score()}\nCurrent color: ${this.targetColor}`);
+        this.scoreLabel.setText(`Score: ${this.score()}`);
 
         this.timer -= delta / 1000;
         if (this.timer < 0 && this.seconds > 0) {
@@ -160,12 +193,14 @@ class Game extends Phaser.Scene {
                     Math.random() < 0.5 ? selectRandom(colors) : this.targetColor
                 );
                 const bubbleVisual = new BubbleVisual(this, newBubblePos.x, newBubblePos.y, bubble);
+                this.sound.play("bubbleSpawn");
                 this.bubbles.add(bubble);
                 this.timer++;
             }
         }
         if (this.seconds == 0) {
             const score = this.score();
+            this.sound.play("gameEnding");
             this.scene.start('restart', { currentHighScore: this.highScore, score });
         }
 
