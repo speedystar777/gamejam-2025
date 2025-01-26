@@ -29,6 +29,7 @@ class Game extends Phaser.Scene {
             this.load.image(`${color} bubble`, `assets/${color}_bubble.png`);
         });
         this.load.json('shapes', 'assets/physics_shapes.json');
+        this.load.image('pufferfish', 'assets/pufferfish.png');
     }
 
     create() {
@@ -37,7 +38,7 @@ class Game extends Phaser.Scene {
 
         this.pufferfish = new Pufferfish(this, 0, 0);
 
-        this.seconds = 10
+        this.seconds = 45
         this.timerText = this.add.text(window.innerWidth - 200, 10, 'Time Left: ' + this.seconds)
             .setStyle({ fontSize: 25 });
         this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.timeEventCallback, callbackScope: this, repeat: -1 });
@@ -95,7 +96,7 @@ class Game extends Phaser.Scene {
             } else if (bodyA.label === "pufferfish" && bodyBIsBubble) {
                 scene.pop(bodyB);
             } else {
-                if (bodyAIsBubble){
+                if (bodyAIsBubble) {
                     scene.bounce(bodyA);
                 }
                 if (bodyBIsBubble) {
@@ -112,7 +113,7 @@ class Game extends Phaser.Scene {
     }
 
     bounce(bubble) {
-      bubble.gameObject.setData("lastBounceTime", this.timeStamp);
+        bubble.gameObject.setData("lastBounceTime", this.timeStamp);
     }
 
     pop(bubble) {
@@ -129,7 +130,7 @@ class Game extends Phaser.Scene {
     }
 
     update(time, delta) {
-      this.timeStamp = time;
+        this.timeStamp = time;
         this.highScoreLabel.setText(`High Score: ${this.highScore}`);
         this.scoreLabel.setText(`Score: ${this.score()}\nCurrent color: ${this.targetColor}`);
 
@@ -169,5 +170,5 @@ class Game extends Phaser.Scene {
         }
 
         //console.log(1 / (delta / 1000), "fps");
-    }    
+    }
 }
