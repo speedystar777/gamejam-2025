@@ -3,9 +3,9 @@ class Pause extends Phaser.Scene {
     super({ key: "pause" });
   }
   preload() {
-    this.load.image('sky', 'assets/orig_big.png');
-    this.load.image('resume', 'assets/resume.png');
-    this.load.image('restart', 'assets/restart.png');
+    this.load.image('sky', 'assets/textures/orig_big.png');
+    this.load.image('resume', 'assets/textures/resume.png');
+    this.load.image('restart', 'assets/textures/restart.png');
   }
 
   init(data) {

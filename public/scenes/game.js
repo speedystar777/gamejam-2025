@@ -24,9 +24,9 @@ class Game extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('sea', 'assets/orig_big.png');
+        this.load.image('sea', 'assets/textures/orig_big.png');
         colors.forEach((color) => {
-            this.load.image(`${color} bubble`, `assets/${color}_bubble.png`);
+            this.load.image(`${color} bubble`, `assets/textures/${color}_bubble.png`);
         });
         this.load.json('shapes', 'assets/physics_shapes.json');
     }

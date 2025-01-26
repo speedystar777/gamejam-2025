@@ -7,8 +7,8 @@ class Restart extends Phaser.Scene {
     this.currentHighScore = data.currentHighScore;
   }
   preload() {
-    this.load.image("sky", "assets/orig_big.png");
-    this.load.image("restart", "assets/restart.png");
+    this.load.image("sky", "assets/textures/orig_big.png");
+    this.load.image("restart", "assets/textures/restart.png");
   }
   create() {
     background(this);

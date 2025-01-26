@@ -12,8 +12,8 @@ class Start extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("sky", "assets/orig_big.png");
-    this.load.image("start", "assets/start.png");
+    this.load.image("sky", "assets/textures/orig_big.png");
+    this.load.image("start", "assets/textures/start.png");
   }
 
   create() {
