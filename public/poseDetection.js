@@ -5,6 +5,7 @@ const imageScaleFactor = 1;
 const flipHorizontal = false;
 const outputStride = 8;
 const debugPos = document.getElementById('debugPos');
+const NOSE_INDEX = 0;
 const LEFT_INDEX = 9;
 const RIGHT_INDEX = 10;
 

@@ -13,3 +13,6 @@
 .pnp.*
 
 node_modules/
+
+public.zip
+.DS_Store

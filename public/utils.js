@@ -38,8 +38,23 @@ function existsFmt(a) {
 }
 
 function controlsSelectionCreate(scene) {
-    scene.mouseControls = scene.add.text(window.innerWidth / 2 - 150, window.innerHeight / 2, 'mouse controls', { fontSize: 20 }).setInteractive();
-    scene.cameraControls = scene.add.text(window.innerWidth / 2 + 150, window.innerHeight / 2, 'camera controls', { fontSize: 20 }).setInteractive();
+
+    const screenCenterX =
+        scene.cameras.main.worldView.x + scene.cameras.main.width / 2;
+    const screenCenterY =
+        scene.cameras.main.worldView.y + scene.cameras.main.height / 2;
+
+    scene.mouseControls = scene.add.text(screenCenterX - 150, screenCenterY + 50, 'mouse controls', {
+        fontSize: 25,
+        stroke: 'black',
+        strokeThickness: 2
+    }).setInteractive().setOrigin(0.5);
+
+    scene.cameraControls = scene.add.text(screenCenterX + 150, screenCenterY + 50, 'camera controls', {
+        fontSize: 25,
+        stroke: 'black',
+        strokeThickness: 2
+    }).setInteractive().setOrigin(0.5);
 
     if (controller === "mouse") {
         scene.mouseControls.setTint(0xfc49dc);
@@ -50,7 +65,7 @@ function controlsSelectionCreate(scene) {
     }
 }
 
-function controlselectionUpdate(scene) {
+function controlsSelectionUpdate(scene) {
     scene.mouseControls.on('pointerdown', function () {
         setController("mouse");
         scene.mouseControls.setTint(0xfc49dc);
@@ -62,4 +77,63 @@ function controlselectionUpdate(scene) {
         scene.cameraControls.setTint(0xfc49dc);
         scene.mouseControls.clearTint();
     }, this);
+}
+
+function title(scene, text) {
+
+    const screenCenterX =
+        scene.cameras.main.worldView.x + scene.cameras.main.width / 2;
+    const screenCenterY =
+        scene.cameras.main.worldView.y + scene.cameras.main.height / 2;
+
+    scene.add
+        .text(screenCenterX, screenCenterY - 150,
+            text, {
+            fontSize: 100,
+            stroke: 'black',
+            strokeThickness: 2,
+        })
+        .setOrigin(0.5);
+}
+
+function content(scene, text, fontSize = 25) {
+
+    const screenCenterX =
+        scene.cameras.main.worldView.x + scene.cameras.main.width / 2;
+    const screenCenterY =
+        scene.cameras.main.worldView.y + scene.cameras.main.height / 2;
+
+    scene.add
+        .text(screenCenterX, screenCenterY - 37.5,
+            text, {
+            wordWrap: { width: scene.cameras.main.width / 2 },
+            stroke: 'black',
+            strokeThickness: 2,
+            fontSize
+        })
+        .setOrigin(0.5);
+}
+
+function button(scene, texture, pointerDown, num = 0) {
+
+    const screenCenterX =
+        scene.cameras.main.worldView.x + scene.cameras.main.width / 2;
+    const screenCenterY =
+        scene.cameras.main.worldView.y + scene.cameras.main.height / 2;
+
+    const image = scene.add.image(0, 0, texture);
+    const container = scene.add.container(screenCenterX, screenCenterY + 150 + num * 100, [
+        image,
+    ]);
+
+    container.setSize(image.width, image.height);
+    container.setInteractive();
+
+    container.on("pointerover", () => {
+        image.setTint(0x83d2e6);
+    });
+    container.on("pointerout", () => {
+        image.clearTint();
+    });
+    container.on("pointerdown", pointerDown);
 }
