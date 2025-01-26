@@ -37,18 +37,6 @@ class Game extends Phaser.Scene {
         this.add.image(400, 300, 'sea');
         this.pufferfish = new Pufferfish(this, 0, 0);
 
-        this.seconds = 10;
-        this.timerText = this.add
-            .text(window.innerWidth - 150, 10, "Time Left: " + this.seconds)
-            .setScale(1.5)
-            .setStyle({ fontStyle: "bold", fontFamily: "Arial" });
-        this.timedEvent = this.time.addEvent({
-            delay: 1000,
-            callback: this.timeEventCallback,
-            callbackScope: this,
-            repeat: -1,
-        });
-
         this.seconds = 10
         this.timerText = this.add.text(window.innerWidth - 200, 10, 'Time Left: ' + this.seconds)
             .setStyle({ fontSize: 25 });
