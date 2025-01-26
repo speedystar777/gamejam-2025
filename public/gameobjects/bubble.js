@@ -16,7 +16,7 @@ class Bubble extends Phaser.Physics.Matter.Sprite {
 
         this.scene = scene;
         this.scene.add.existing(this);
-        this.setVelocity(velocityX, velocityY);
+        //this.setVelocity(velocityX, velocityY);
         this.setFrictionAir(0);
         this.setBounce(1);
         this.addToUpdateList();
@@ -24,13 +24,14 @@ class Bubble extends Phaser.Physics.Matter.Sprite {
         this.setFriction(0);
         this.setFrictionStatic(1);
         this.setIgnoreGravity(true);
+        this.setVisible(false);
 
         this.bounceAnim = 9999;
     }
 
-    startBounceAnim(){
-        this.bounceAnim = 0;
-    }
+    //startBounceAnim(){
+    //    this.bounceAnim = 0;
+    //}
 
     preUpdate(time, delta) {
         if (this.y < -256) {
@@ -39,18 +40,18 @@ class Bubble extends Phaser.Physics.Matter.Sprite {
             this.setIgnoreGravity(this.getVelocity().y < -1);
         }
 
-        this.bounceAnim += delta / 1000;
+        //this.bounceAnim += delta / 1000;
 
-        const scaleX = (1000 * Math.cos(this.bounceAnim)) / this.bounceAnim + 1;
+        //const scaleX = (1000 * Math.cos(this.bounceAnim)) / this.bounceAnim + 1;
         //const scaleX = 1 + Math.sin(time) * 0.25;
-        const scaleY = 1 / scaleX;
+        //const scaleY = 1 / scaleX;
 
-        console.log(this, {scaleX, scaleY});
+        //console.log(this, {scaleX, scaleY});
         if (this.body) {
             //console.log("yes");
-            this.setDisplaySize(scaleX, scaleY);
+            //this.setDisplaySize(scaleX, scaleY);
         } else {
-            console.log("no");
+            //console.log("no");
         }
     }
 }

@@ -92,6 +92,8 @@ class Game extends Phaser.Scene {
         const scene = this;
         this.matter.world.on("collisionstart", function (event, bodyA, bodyB) {
 
+          console.log(event);
+
             const bodyAIsBubble = bodyA.gameObject?.getData("bubble");
             const bodyBIsBubble = bodyB.gameObject?.getData("bubble");
 
@@ -101,10 +103,10 @@ class Game extends Phaser.Scene {
                 scene.pop(bodyB);
             } else {
                 if (bodyAIsBubble){
-                    bodyA.gameObject.startBounceAnim();
+                    bodyA.gameObject.setData("lastBounceTime", event.timestamp);
                 }
                 if (bodyBIsBubble) {
-                    bodyB.gameObject.startBounceAnim();
+                    bodyB.gameObject.setData("lastBounceTime", event.timestamp);
                 }
             }
         });
@@ -153,6 +155,7 @@ class Game extends Phaser.Scene {
                     this.bubblesSpawned++,
                     Math.random() < 0.5 ? selectRandom(colors) : this.targetColor
                 );
+                const bubbleVisual = new BubbleVisual(this, newBubblePos.x, newBubblePos.y, bubble);
                 this.bubbles.add(bubble);
                 this.timer++;
             }
