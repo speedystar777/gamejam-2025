@@ -123,9 +123,12 @@ class Game extends Phaser.Scene {
             const bodyAIsBubble = bodyA.gameObject?.getData("bubble");
             const bodyBIsBubble = bodyB.gameObject?.getData("bubble");
 
-            if (bodyAIsBubble && bodyB.label === "pufferfish") {
+            const bodyAIsPuffer = bodyA.gameObject?.getData("pufferfish");
+            const bodyBIsPuffer = bodyB.gameObject?.getData("pufferfish");
+
+            if (bodyAIsBubble && bodyBIsPuffer) {
                 scene.pop(bodyA);
-            } else if (bodyA.label === "pufferfish" && bodyBIsBubble) {
+            } else if (bodyAIsPuffer && bodyBIsBubble) {
                 scene.pop(bodyB);
             } else {
                 if (bodyAIsBubble) {
