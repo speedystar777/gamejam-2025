@@ -15,7 +15,7 @@ class Instructions extends Phaser.Scene {
   create() {
     background(this);
     title(this, "How to play");
-    content(this, "Move your mouse (mouse controls) or right hand (camera controls) to pop bubbles that match the specified color. Avoid bubbles of other colors.");
+    content(this, "Move your mouse (mouse controls) or your head (camera controls) to pop bubbles that match the specified color. Avoid bubbles of other colors.");
     controlsSelectionCreate(this);
     const insctructionsScene = this.scene;
     button(this, "start", () => insctructionsScene.start("game", { highScore: this.highScore }));

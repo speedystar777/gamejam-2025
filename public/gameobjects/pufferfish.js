@@ -18,8 +18,8 @@ class Pufferfish extends Phaser.Physics.Matter.Sprite {
 
     preUpdate(time, delta) {
         if (controller === "camera" && debugPoints != null) {
-            this.x = getOffset(debugPoints[RIGHT_INDEX]).left;
-            this.y = getOffset(debugPoints[RIGHT_INDEX]).top;
+            this.x = getOffset(debugPoints[NOSE_INDEX]).left;
+            this.y = getOffset(debugPoints[NOSE_INDEX]).top;
         }
     }
 }
