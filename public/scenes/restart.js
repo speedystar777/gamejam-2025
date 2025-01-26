@@ -10,7 +10,7 @@ class Restart extends Phaser.Scene {
     this.load.image("sky", "assets/orig_big.png");
   }
   create() {
-    this.add.image(400, 300, "sky");
+    background(this);
     this.add.text(
       window.innerWidth / 2 - 250,
       window.innerHeight / 2 - 200,

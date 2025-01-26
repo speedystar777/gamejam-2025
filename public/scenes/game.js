@@ -32,57 +32,64 @@ class Game extends Phaser.Scene {
         this.load.json('shapes', 'assets/physics_shapes.json');
     }
 
-    create() {
+  create() {
 
-        this.add.image(400, 300, 'sea');
-        this.pufferfish = new Pufferfish(this, 0, 0);
+    background(this);
 
-        this.seconds = 10
-        this.timerText = this.add.text(window.innerWidth - 200, 10, 'Time Left: ' + this.seconds)
-            .setStyle({ fontSize: 25 });
-        this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.timeEventCallback, callbackScope: this, repeat: -1 });
+    this.pufferfish = new Pufferfish(this, 0, 0);
 
-        this.pauseButton = this.add.text(window.innerWidth - 200, 40, 'Pause', { fontSize: 25 }).setInteractive();
+    this.seconds = 10;
+    this.timerText = this.add
+      .text(window.innerWidth - 150, 10, "Time Left: " + this.seconds)
+      .setScale(1.5)
+      .setStyle({ fontStyle: "bold", fontFamily: "Arial" });
+    this.timedEvent = this.time.addEvent({
+      delay: 1000,
+      callback: this.timeEventCallback,
+      callbackScope: this,
+      repeat: -1,
+    });
 
+    this.scoreLabel = this.add
+      .text(10, 40, "Update-function-call-counter")
+      .setScale(1.5)
+      .setOrigin(0)
+      .setStyle({ fontStyle: "bold", fontFamily: "Arial" });
 
-        this.scoreLabel = this.add
-            .text(10, 40, "Update-function-call-counter")
-            .setOrigin(0)
-            .setStyle({ fontSize: 25 });
+    this.highScoreLabel = this.add
+      .text(10, 10, "Update-function-call-counter")
+      .setScale(1.5)
+      .setOrigin(0)
+      .setStyle({ fontStyle: "bold", fontFamily: "Arial" });
 
-        this.highScoreLabel = this.add
-            .text(10, 10, "Update-function-call-counter")
-            .setOrigin(0)
-            .setStyle({ fontSize: 25 });
+    this.width = this.sys.game.config.width;
+    this.height = this.sys.game.config.height;
+    this.bubbles = this.add.group();
 
-        this.width = this.sys.game.config.width;
-        this.height = this.sys.game.config.height;
-        this.bubbles = this.add.group();
+    const wallThickness = 20;
+    const wallHeight = this.height + 500;
 
-        const wallThickness = 20;
-        const wallHeight = this.height + 500;
+    this.matter.add.rectangle(
+      -wallThickness / 2,
+      wallHeight / 2,
+      wallThickness,
+      wallHeight,
+      {
+        restitution: 1,
+        isStatic: true,
+      }
+    );
 
-        this.matter.add.rectangle(
-            -wallThickness / 2,
-            wallHeight / 2,
-            wallThickness,
-            wallHeight,
-            {
-                restitution: 1,
-                isStatic: true,
-            }
-        );
-
-        this.matter.add.rectangle(
-            this.width + wallThickness / 2,
-            wallHeight / 2,
-            wallThickness,
-            wallHeight,
-            {
-                restitution: 1,
-                isStatic: true,
-            }
-        );
+    this.matter.add.rectangle(
+      this.width + wallThickness / 2,
+      wallHeight / 2,
+      wallThickness,
+      wallHeight,
+      {
+        restitution: 1,
+        isStatic: true,
+      }
+    );
 
         const scene = this;
         this.matter.world.on("collisionstart", function (event, bodyA, bodyB) {
