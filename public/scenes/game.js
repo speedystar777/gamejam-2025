@@ -1,27 +1,27 @@
 class Game extends Phaser.Scene {
+  constructor() {
+    super({ key: "game" });
+  }
 
-    constructor() {
-        super({ key: "game" });
+  timeEventCallback() {
+    this.seconds--;
+    this.timerText.setText("Time Left: " + this.seconds);
+    if (this.seconds === 0) {
+      this.timedEvent.paused = true;
     }
+  }
 
-    timeEventCallback() {
-        this.seconds--;
-        this.timerText.setText('Time Left: ' + this.seconds);
-        if (this.seconds === 0) {
-            this.timedEvent.paused = true;
-        }
-    }
-
-    init() {
-        this.targetColor = selectRandom(colors);
-        this.timer = 0;
-        this.correctPopCount = 0;
-        this.incorrectPopCount = 0;
-        this.bubblesSpawned = 0;
-        this.leftWall = null;
-        this.rightWall = null;
-        this.pufferfish = null;
-    }
+  init(data) {
+    this.targetColor = selectRandom(colors);
+    this.timer = 0;
+    this.correctPopCount = 0;
+    this.incorrectPopCount = 0;
+    this.highScore = data?.highScore || 0;
+    this.bubblesSpawned = 0;
+    this.leftWall = null;
+    this.rightWall = null;
+    this.pufferfish = null;
+  }
 
     preload() {
         this.load.image('sky', 'assets/orig_big.png');
@@ -31,40 +31,63 @@ class Game extends Phaser.Scene {
         this.load.json('shapes', 'assets/physics_shapes.json');
     }
 
-    create() {
+  create() {
+    this.add.image(400, 300, "sky");
 
-        this.add.image(400, 300, 'sky');
+    this.pufferfish = new Pufferfish(this, 0, 0);
 
-        this.pufferfish = new Pufferfish(this, 0, 0);
+    this.seconds = 10;
+    this.timerText = this.add
+      .text(window.innerWidth - 150, 10, "Time Left: " + this.seconds)
+      .setScale(1.5)
+      .setStyle({ fontStyle: "bold", fontFamily: "Arial" });
+    this.timedEvent = this.time.addEvent({
+      delay: 1000,
+      callback: this.timeEventCallback,
+      callbackScope: this,
+      repeat: -1,
+    });
 
-        this.seconds = 20
-        this.timerText = this.add.text(window.innerWidth - 150, 10, 'Time Left: ' + this.seconds)
-            .setScale(1.5)
-            .setStyle({ fontStyle: "bold", fontFamily: "Arial" });
-        this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.timeEventCallback, callbackScope: this, repeat: -1 });
+    this.scoreLabel = this.add
+      .text(10, 40, "Update-function-call-counter")
+      .setScale(1.5)
+      .setOrigin(0)
+      .setStyle({ fontStyle: "bold", fontFamily: "Arial" });
 
-        this.label = this.add
-            .text(10, 10, "Update-function-call-counter")
-            .setScale(1.5)
-            .setOrigin(0)
-            .setStyle({ fontStyle: "bold", fontFamily: "Arial" });
+    this.highScoreLabel = this.add
+      .text(10, 10, "Update-function-call-counter")
+      .setScale(1.5)
+      .setOrigin(0)
+      .setStyle({ fontStyle: "bold", fontFamily: "Arial" });
 
-        this.width = this.sys.game.config.width;
-        this.height = this.sys.game.config.height;
-        this.bubbles = this.add.group();
+    this.width = this.sys.game.config.width;
+    this.height = this.sys.game.config.height;
+    this.bubbles = this.add.group();
 
-        const wallThickness = 20;
-        const wallHeight = this.height + 500;
+    const wallThickness = 20;
+    const wallHeight = this.height + 500;
 
-        this.matter.add.rectangle(-wallThickness / 2, wallHeight / 2, wallThickness, wallHeight, {
-            restitution: 1,
-            isStatic: true
-        });
+    this.matter.add.rectangle(
+      -wallThickness / 2,
+      wallHeight / 2,
+      wallThickness,
+      wallHeight,
+      {
+        restitution: 1,
+        isStatic: true,
+      }
+    );
 
-        this.matter.add.rectangle(this.width + wallThickness / 2, wallHeight / 2, wallThickness, wallHeight, {
-            restitution: 1,
-            isStatic: true
-        });
+    this.matter.add.rectangle(
+      this.width + wallThickness / 2,
+      wallHeight / 2,
+      wallThickness,
+      wallHeight,
+      {
+        restitution: 1,
+        isStatic: true,
+      }
+    );
 
         const scene = this;
         this.matter.world.on("collisionstart", function (event, bodyA, bodyB) {
@@ -90,9 +113,13 @@ class Game extends Phaser.Scene {
         bubble.gameObject.destroy();
     }
 
-    update(time, delta) {
+    score(){
+      return this.correctPopCount * 10 - this.incorrectPopCount * 3;
+    }
 
-        this.label.setText(`Target color: ${this.targetColor}; Correct bubbles popped: ${this.correctPopCount}; Incorrect bubbles popped: ${this.incorrectPopCount}`);
+  update(time, delta) {
+    this.highScoreLabel.setText(`High Score: ${this.highScore}`);
+    this.scoreLabel.setText(`Score: ${this.score()}\nCurrent color: ${this.targetColor}`);
 
         this.timer -= delta / 1000;
         if (this.timer < 0 && this.seconds > 0) {
@@ -124,10 +151,9 @@ class Game extends Phaser.Scene {
             }
         }
         if (this.seconds == 0) {
-            const score = this.correctPopCount * 10 - this.incorrectPopCount * 3;
-            this.scene.start('restart', { score })
+            const score = this.score();
+            this.scene.start('restart', { currentHighScore: this.highScore, score });
         }
     }
 
 }
-
