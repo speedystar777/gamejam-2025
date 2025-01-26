@@ -25,7 +25,6 @@ class Game extends Phaser.Scene {
 
     preload() {
         this.load.image('sea', 'assets/orig_big.png');
-        this.load.image('bubble', 'assets/bubble.svg');
         colors.forEach((color) => {
             this.load.image(`${color} bubble`, `assets/${color}_bubble.png`);
         });
@@ -95,6 +94,13 @@ class Game extends Phaser.Scene {
                 scene.pop(bodyA);
             } else if (bodyA.label === "pufferfish" && bodyBIsBubble) {
                 scene.pop(bodyB);
+            } else {
+                if (bodyAIsBubble){
+                    scene.bounce(bodyA);
+                }
+                if (bodyBIsBubble) {
+                    scene.bounce(bodyB);
+                }
             }
         });
 
@@ -103,6 +109,10 @@ class Game extends Phaser.Scene {
             this.scene.pause();
         }, this)
 
+    }
+
+    bounce(bubble) {
+      bubble.gameObject.setData("lastBounceTime", this.timeStamp);
     }
 
     pop(bubble) {
@@ -119,6 +129,7 @@ class Game extends Phaser.Scene {
     }
 
     update(time, delta) {
+      this.timeStamp = time;
         this.highScoreLabel.setText(`High Score: ${this.highScore}`);
         this.scoreLabel.setText(`Score: ${this.score()}\nCurrent color: ${this.targetColor}`);
 
@@ -147,6 +158,7 @@ class Game extends Phaser.Scene {
                     this.bubblesSpawned++,
                     Math.random() < 0.5 ? selectRandom(colors) : this.targetColor
                 );
+                const bubbleVisual = new BubbleVisual(this, newBubblePos.x, newBubblePos.y, bubble);
                 this.bubbles.add(bubble);
                 this.timer++;
             }

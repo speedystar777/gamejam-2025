@@ -24,8 +24,11 @@ class Bubble extends Phaser.Physics.Matter.Sprite {
         this.setFriction(0);
         this.setFrictionStatic(1);
         this.setIgnoreGravity(true);
-    }
+        this.setVisible(false);
 
+        this.bounceAnim = 9999;
+    }
+    
     preUpdate(time, delta) {
         if (this.y < -256) {
             this.destroy();
