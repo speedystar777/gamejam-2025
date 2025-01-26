@@ -37,7 +37,7 @@ function existsFmt(a) {
     }
 }
 
-function controlsSelectionCreate(scene){
+function controlsSelectionCreate(scene) {
     scene.mouseControls = scene.add.text(window.innerWidth / 2 - 150, window.innerHeight / 2, 'mouse controls', { fontSize: 20 }).setInteractive();
     scene.cameraControls = scene.add.text(window.innerWidth / 2 + 150, window.innerHeight / 2, 'camera controls', { fontSize: 20 }).setInteractive();
 

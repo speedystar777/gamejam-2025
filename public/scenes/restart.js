@@ -26,18 +26,17 @@ class Restart extends Phaser.Scene {
       screenCenterX - 275,
       screenCenterY - 75,
       "High Score: " +
-        `${
-          this.finalScore > this.currentHighScore
-            ? this.finalScore
-            : this.currentHighScore
-        }`,
+      `${this.finalScore > this.currentHighScore
+        ? (lang === 'english' ? this.finalScore : convertToSanskrit(this.finalScore))
+        : (lang === 'english' ? this.currentHighScore : convertToSanskrit(this.currentHighScore))
+      }`,
       { fontSize: 50, fontStyle: "bold" }
     );
 
     this.add.text(
       screenCenterX - 275,
       screenCenterY - 25,
-      "Your score was: " + this.finalScore,
+      "Your score was: " + (lang === 'english' ? this.finalScore : convertToSanskrit(this.finalScore)),
       { fontSize: 50, fontStyle: "bold" }
     );
 
@@ -67,10 +66,10 @@ class Restart extends Phaser.Scene {
     container.on("pointerdown", () => {
       this.scene.start("game", { highScore: newHighScore });
     });
-    
+
   }
 
-  update(){
+  update() {
     controlselectionUpdate(this);
   }
 }
