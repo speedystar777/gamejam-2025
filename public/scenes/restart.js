@@ -41,9 +41,7 @@ class Restart extends Phaser.Scene {
       { fontSize: 50, fontStyle: "bold" }
     );
 
-    this.add.text(window.innerWidth / 2 - 150, screenCenterY + 50, 'use mouse controls?', { fontSize: 20 })
-    this.mouseYes = this.add.text(window.innerWidth / 2 + 100, screenCenterY + 50, 'y', { fontSize: 20 }).setInteractive();
-    this.mouseNo = this.add.text(window.innerWidth / 2 + 155, screenCenterY + 50, 'n', { fontSize: 20 }).setInteractive();
+    controlsSelectionCreate(this, screenCenterY + 50);
 
     const bg = this.add.image(0, 0, "restart");
     const container = this.add.container(
@@ -73,16 +71,6 @@ class Restart extends Phaser.Scene {
   }
 
   update(){
-    this.mouseYes.on('pointerdown', function () {
-      mouseControlsCheckbox.checked = true;
-      this.mouseYes.setTint(0xfc49dc);
-      this.mouseNo.clearTint();
-    }, this);
-
-    this.mouseNo.on('pointerdown', function () {
-      mouseControlsCheckbox.checked = false;
-      this.mouseNo.setTint(0xfc49dc);
-      this.mouseYes.clearTint();
-    }, this);
+    controlselectionUpdate(this);
   }
 }

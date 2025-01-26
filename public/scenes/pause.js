@@ -16,10 +16,8 @@ class Pause extends Phaser.Scene {
     this.add.image(400, 300, 'sky');
     this.blackFade = this.add.rectangle(0, 0, window.innerWidth * 2, window.innerHeight * 2, 0);
     this.blackFade.setAlpha(0.5);
-    this.add.text(window.innerWidth / 2 - 150, window.innerHeight / 2, 'use mouse controls?', { fontSize: 20 })
-    this.mouseYes = this.add.text(window.innerWidth / 2 + 100, window.innerHeight / 2, 'y', { fontSize: 20 }).setInteractive();
-    this.mouseNo = this.add.text(window.innerWidth / 2 + 155, window.innerHeight / 2, 'n', { fontSize: 20 }).setInteractive();
-    
+    controlsSelectionCreate(this);
+
     const screenCenterX =
       this.cameras.main.worldView.x + this.cameras.main.width / 2;
     const screenCenterY =
@@ -68,16 +66,6 @@ class Pause extends Phaser.Scene {
   }
 
   update() {
-    this.mouseYes.on('pointerdown', function () {
-      mouseControlsCheckbox.checked = true;
-      this.mouseYes.setTint(0xfc49dc);
-      this.mouseNo.clearTint();
-    }, this);
-
-    this.mouseNo.on('pointerdown', function () {
-      mouseControlsCheckbox.checked = false;
-      this.mouseNo.setTint(0xfc49dc);
-      this.mouseYes.clearTint();
-    }, this);
+    controlselectionUpdate(this);
   }
 }
