@@ -10,7 +10,7 @@ class Restart extends Phaser.Scene {
     this.load.image("sky", "assets/orig_big.png");
   }
   create() {
-    this.add.image(400, 300, "sky");
+    background(this);
     this.add.text(
       window.innerWidth / 2 - 250,
       window.innerHeight / 2 - 200,
@@ -20,11 +20,10 @@ class Restart extends Phaser.Scene {
     this.add.text(
       window.innerWidth / 2 - 250,
       window.innerHeight / 2 - 60,
-      "High Score: " + `${
-          this.finalScore > this.currentHighScore
-            ? this.finalScore
-            : this.currentHighScore
-        }`,
+      "High Score: " + `${this.finalScore > this.currentHighScore
+        ? this.finalScore
+        : this.currentHighScore
+      }`,
       { fontSize: 50, fontStyle: "bold" }
     );
     this.add.text(
@@ -33,12 +32,16 @@ class Restart extends Phaser.Scene {
       "Your score was: " + this.finalScore,
       { fontSize: 50, fontStyle: "bold" }
     );
-    this.add.text(
+    this.restartButton = this.add.text(
       window.innerWidth / 2 - 250,
       window.innerHeight / 2 + 60,
       "Click to restart",
       { fontSize: 30 }
-    );
+    ).setInteractive();
+
+    this.add.text(window.innerWidth / 2 - 150, window.innerHeight / 2 + 130, 'use mouse controls?', { fontSize: 20 })
+    this.mouseYes = this.add.text(window.innerWidth / 2 + 100, window.innerHeight / 2 + 130, 'y', { fontSize: 20 }).setInteractive();
+    this.mouseNo = this.add.text(window.innerWidth / 2 + 155, window.innerHeight / 2 + 130, 'n', { fontSize: 20 }).setInteractive();
   }
 
   update() {
@@ -46,12 +49,20 @@ class Restart extends Phaser.Scene {
     if (this.currentHighScore < this.finalScore) {
       newHighScore = this.finalScore;
     }
-    this.input.on(
+    this.restartButton.on(
       "pointerdown",
       function () {
         this.scene.start("game", { highScore: newHighScore });
       },
       this
     );
+
+    this.mouseYes.on('pointerdown', function () {
+      mouseControlsCheckbox.checked = true;
+    }, this);
+
+    this.mouseNo.on('pointerdown', function () {
+      mouseControlsCheckbox.checked = false;
+    }, this);
   }
 }
