@@ -25,7 +25,7 @@ function setController(newController) {
                 .catch(function (error) {
                     console.error(error, "\nSomething went wrong!");
                 })
-                .finally(function() {
+                .finally(function () {
                     cameraPending = false;
                 });
         }

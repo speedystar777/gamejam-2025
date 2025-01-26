@@ -29,6 +29,7 @@ class Game extends Phaser.Scene {
             this.load.image(`${color} bubble`, `assets/textures/${color}_bubble.png`);
         });
         this.load.json('shapes', 'assets/physics_shapes.json');
+        this.load.image('pufferfish', 'assets/pufferfish.png');
         this.load.audio("bubblePop", "assets/audio/bubblePop.mp3");
         this.load.audio("bubbleSpawn", "assets/audio/bubbleSpawn.mp3");
         this.load.audio("gameEnding", "assets/audio/gameEnding.mp3");
@@ -43,7 +44,7 @@ class Game extends Phaser.Scene {
 
         this.pufferfish = new Pufferfish(this, 0, 0);
 
-        this.seconds = 10
+        this.seconds = 45
         this.timerText = this.add.text(window.innerWidth - 200, 10, 'Time Left: ' + this.seconds)
             .setStyle({
                 fontSize: 25,
