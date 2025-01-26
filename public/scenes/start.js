@@ -29,9 +29,7 @@ class Start extends Phaser.Scene {
       })
       .setOrigin(0.5);
 
-    this.add.text(window.innerWidth / 2 - 150, screenCenterY - 15, 'use mouse controls?', { fontSize: 20 })
-    this.mouseYes = this.add.text(window.innerWidth / 2 + 105, screenCenterY - 15, 'y', { fontSize: 20 }).setInteractive();
-    this.mouseNo = this.add.text(window.innerWidth / 2 + 155, screenCenterY - 15, 'n', { fontSize: 20 }).setInteractive();
+    controlsSelectionCreate(this);
     
     const bg = this.add.image(0, 0, "start");
     const container = this.add.container(screenCenterX, screenCenterY + 100, [
@@ -52,16 +50,6 @@ class Start extends Phaser.Scene {
     });
   }
   update(){
-    this.mouseYes.on('pointerdown', function () {
-      mouseControlsCheckbox.checked = true;
-      this.mouseYes.setTint(0xfc49dc);
-      this.mouseNo.clearTint();
-    }, this);
-
-    this.mouseNo.on('pointerdown', function () {
-      mouseControlsCheckbox.checked = false;
-      this.mouseNo.setTint(0xfc49dc);
-      this.mouseYes.clearTint();
-    }, this);
+    controlselectionUpdate(this);
   }
 }

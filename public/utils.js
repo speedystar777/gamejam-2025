@@ -1,8 +1,3 @@
-const mouseControlsCheckbox = document.getElementById("mouse-controls");
-function mouseControlsEnabled() {
-    return mouseControlsCheckbox.checked;
-}
-
 function getOffset(el) {
     const rect = el?.getBoundingClientRect();
     return {
@@ -32,4 +27,39 @@ function background(scene) {
         scene.background.displayWidth = scene.sys.canvas.height * backgroundWidth / backgroundHeight;
         scene.background.displayHeight = scene.sys.canvas.height;
     }
+}
+
+function existsFmt(a) {
+    if (a === undefined || a == null) {
+        return a;
+    } else {
+        return "exists";
+    }
+}
+
+function controlsSelectionCreate(scene){
+    scene.mouseControls = scene.add.text(window.innerWidth / 2 - 150, window.innerHeight / 2, 'mouse controls', { fontSize: 20 }).setInteractive();
+    scene.cameraControls = scene.add.text(window.innerWidth / 2 + 150, window.innerHeight / 2, 'camera controls', { fontSize: 20 }).setInteractive();
+
+    if (controller === "mouse") {
+        scene.mouseControls.setTint(0xfc49dc);
+        scene.cameraControls.clearTint();
+    } else {
+        scene.cameraControls.setTint(0xfc49dc);
+        scene.mouseControls.clearTint();
+    }
+}
+
+function controlselectionUpdate(scene) {
+    scene.mouseControls.on('pointerdown', function () {
+        setController("mouse");
+        scene.mouseControls.setTint(0xfc49dc);
+        scene.cameraControls.clearTint();
+    }, this);
+
+    scene.cameraControls.on('pointerdown', function () {
+        setController("camera");
+        scene.cameraControls.setTint(0xfc49dc);
+        scene.mouseControls.clearTint();
+    }, this);
 }

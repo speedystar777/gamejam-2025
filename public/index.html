@@ -11,14 +11,11 @@
 
 <body style="margin: 0;">
   <video autoplay playsinline muted id="webcam" width="256" height="256" style="transform: scaleX(-1); 
-  position: absolute; top: 0px; right: 0px; z-index: -1;"></video>
+  position: absolute; left: 0px; bottom: 0px; z-index: 1;"></video>
   <div id="debugPos" style="position: absolute; top: 0px; left: 0px;z-index: 3;background-color:#00ff00;
         width:8;height:8;"></div>
-  <div style="position: absolute; top: 0px; left: 0px; z-index: -1;">
-    <input type="checkbox" id="mouse-controls" /><label>Mouse Controls</label>
-  </div>
   <script src="./utils.js"></script>
-  <script src="./webcamSetup.js"> </script>
+  <script src="./controls.js"> </script>
   <script src="./poseDetection.js"></script>
   <script src="./gameobjects/bubble.js"></script>
   <script src="./gameobjects/bubble-visual.js"></script>

@@ -30,8 +30,6 @@ class BubbleVisual extends Phaser.GameObjects.Sprite {
         if (lastBounceTime !== undefined) {
             const t = (time - lastBounceTime) / 1000;
 
-            console.log(t);
-
             const scaleX = (0.1 * Math.sin(10 * t)) / (t * t * t + 1) + 1;
             const scaleY = 1 / scaleX;
 

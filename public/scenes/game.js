@@ -167,6 +167,7 @@ class Game extends Phaser.Scene {
             const score = this.score();
             this.scene.start('restart', { currentHighScore: this.highScore, score });
         }
-    }
 
+        //console.log(1 / (delta / 1000), "fps");
+    }    
 }

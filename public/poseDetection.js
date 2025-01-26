@@ -4,40 +4,44 @@ console.log("Loading PoseNet")
 const imageScaleFactor = 1;
 const flipHorizontal = false;
 const outputStride = 8;
-const imageElement = document.getElementById('webcam');
 const debugPos = document.getElementById('debugPos');
 const LEFT_INDEX = 9;
 const RIGHT_INDEX = 10;
 
-let debugPoints = null;
-
-if (imageElement) {
-    const smoothing = 0.9;
-    var poseHistory = [];
-    debugPoints = [];
-    for (var i = 0; i < 17; i++) {
-        debugPoints[i] = debugPos.cloneNode(false);
-        // if (i == LEFT_INDEX) {
-        //     debugPoints[i].style.backgroundColor = "#f00";
-        // }
-        // else if (i == RIGHT_INDEX) {
-        //     debugPoints[i].style.backgroundColor = "#00f";
-        // }
-        // else {
-        //     debugPoints[i].style.zIndex = -1;
-        // }
-        debugPoints[i].style.zIndex = -1;
-        debugPos.parentNode.appendChild(debugPoints[i]);
+const smoothing = 0.9;
+const poseHistory = [];
+const debugPoints = [];
+for (var i = 0; i < 17; i++) {
+    debugPoints[i] = debugPos.cloneNode(false);
+    if (i == LEFT_INDEX) {
+        debugPoints[i].style.backgroundColor = "#f00";
     }
-    debugPos.remove();
+    else if (i == RIGHT_INDEX) {
+        debugPoints[i].style.backgroundColor = "#00f";
+    }
+    //else {
+    //     debugPoints[i].style.zIndex = -1;
+    // }
+    debugPoints[i].style.zIndex = -1;
+    debugPos.parentNode.appendChild(debugPoints[i]);
+}
+debugPos.remove();
 
-    posenet.load().then(function (net) {
-        // posenet model loaded
-        console.log("PoseNet model loaded");
-        var intervalID = setInterval(myCallback, 16);
+posenet.load().then(function (net) {
+    // posenet model loaded
+    console.log("PoseNet model loaded");
+    var intervalID = setInterval(myCallback, 16);
 
-        function myCallback() {
-            net.estimateSinglePose(imageElement, imageScaleFactor, flipHorizontal, outputStride).then(function (pose) {
+    function myCallback() {
+        /*console.log(
+            "imageElement:", existsFmt(video),
+            "srcObject:", existsFmt(video?.srcObject),
+            "active:", video?.srcObject?.active,
+            "video tracks:", video?.srcObject?.getVideoTracks().length,
+            "resolution:", video?.videoWidth, "by", video?.videoHeight
+        );*/
+        if (controller === "camera" && cameraAvailable()) {
+            net.estimateSinglePose(video, imageScaleFactor, flipHorizontal, outputStride).then(function (pose) {
                 for (var i = 0; i < 17; i++) {
                     var pos = pose.keypoints[i].position;
                     const newX = window.innerWidth - ((pos.x / 256) * window.innerWidth);
@@ -58,10 +62,9 @@ if (imageElement) {
                 }
             });
         }
-    });
-
-    function lerp(a, b, t) {
-        return a + (b - a) * t;
     }
+});
 
+function lerp(a, b, t) {
+    return a + (b - a) * t;
 }
