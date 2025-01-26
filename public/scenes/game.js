@@ -168,6 +168,6 @@ class Game extends Phaser.Scene {
             this.scene.start('restart', { currentHighScore: this.highScore, score });
         }
 
-        console.log(1 / (delta / 1000), "fps");
+        //console.log(1 / (delta / 1000), "fps");
     }    
 }
