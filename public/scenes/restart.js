@@ -18,17 +18,17 @@ class Restart extends Phaser.Scene {
     let newHighScore = this.currentHighScore;
     if (this.currentHighScore < this.finalScore) {
       newHighScore = this.finalScore;
-      this.sound.play("highScore", {delay: 1});
+      this.sound.play("highScore", { delay: 1 });
     }
 
-    content(this, `High Score: ${newHighScore}\nYour score was: ${this.finalScore}`, 50);
+    content(this, `High Score: ${lang === 'english' ? newHighScore : convertToSanskrit(newHighScore)}\nYour score was: ${lang === 'english' ? this.finalScore : convertToSanskrit(this.finalScore)}`, 50);
     controlsSelectionCreate(this);
 
     const restartScene = this.scene;
     button(this, "restart", () => restartScene.start("instructions", { highScore: newHighScore }));
   }
 
-  update(){
+  update() {
     controlsSelectionUpdate(this);
   }
 }
