@@ -39,21 +39,47 @@ class Game extends Phaser.Scene {
 
         this.seconds = 10
         this.timerText = this.add.text(window.innerWidth - 200, 10, 'Time Left: ' + this.seconds)
-            .setStyle({ fontSize: 25 });
+            .setStyle({
+                fontSize: 25,
+                stroke: 'black',
+                strokeThickness: 2,
+            });
+
         this.timedEvent = this.time.addEvent({ delay: 1000, callback: this.timeEventCallback, callbackScope: this, repeat: -1 });
 
-        this.pauseButton = this.add.text(window.innerWidth - 200, 40, 'Pause', { fontSize: 25 }).setInteractive();
+        this.pauseButton = this.add.text(window.innerWidth - 200, 40, 'Pause', {
+            fontSize: 25,
+            stroke: 'black',
+            strokeThickness: 2,
+        }).setInteractive();
 
 
         this.scoreLabel = this.add
             .text(10, 40, "Update-function-call-counter")
             .setOrigin(0)
-            .setStyle({ fontSize: 25 });
+            .setStyle({
+                fontSize: 25,
+                stroke: 'black',
+                strokeThickness: 2,
+            });
 
         this.highScoreLabel = this.add
             .text(10, 10, "Update-function-call-counter")
             .setOrigin(0)
-            .setStyle({ fontSize: 25 });
+            .setStyle({
+                fontSize: 25,
+                stroke: 'black',
+                strokeThickness: 2,
+            });
+
+        this.colorLabel = this.add
+            .text(screen.width / 2, 10,
+                `Pop ${this.targetColor} bubbles!`, {
+                fontSize: 25,
+                stroke: 'black',
+                strokeThickness: 2,
+            })
+            .setOrigin(0.5, 0);
 
         this.width = this.sys.game.config.width;
         this.height = this.sys.game.config.height;
@@ -95,7 +121,7 @@ class Game extends Phaser.Scene {
             } else if (bodyA.label === "pufferfish" && bodyBIsBubble) {
                 scene.pop(bodyB);
             } else {
-                if (bodyAIsBubble){
+                if (bodyAIsBubble) {
                     scene.bounce(bodyA);
                 }
                 if (bodyBIsBubble) {
@@ -112,7 +138,7 @@ class Game extends Phaser.Scene {
     }
 
     bounce(bubble) {
-      bubble.gameObject.setData("lastBounceTime", this.timeStamp);
+        bubble.gameObject.setData("lastBounceTime", this.timeStamp);
     }
 
     pop(bubble) {
@@ -129,9 +155,9 @@ class Game extends Phaser.Scene {
     }
 
     update(time, delta) {
-      this.timeStamp = time;
+        this.timeStamp = time;
         this.highScoreLabel.setText(`High Score: ${this.highScore}`);
-        this.scoreLabel.setText(`Score: ${this.score()}\nCurrent color: ${this.targetColor}`);
+        this.scoreLabel.setText(`Score: ${this.score()}`);
 
         this.timer -= delta / 1000;
         if (this.timer < 0 && this.seconds > 0) {
@@ -169,5 +195,5 @@ class Game extends Phaser.Scene {
         }
 
         //console.log(1 / (delta / 1000), "fps");
-    }    
+    }
 }
